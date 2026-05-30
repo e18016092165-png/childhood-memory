@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>童年时光机 · 六一快乐</title>
-<meta name="description" content="一张照片 · 一段回忆 · 一趟旅行。上传照片生成童年记忆，探索手绘时光地图，收集童年贴纸。六一特别企划。">
+<meta name="description" content="一张照片 · 一段回忆 · 一趟旅行。选择你的童年年代，上传照片生成专属童年记忆照，探索手绘时光地图。六一特别企划。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="童年时光机">
-<meta property="og:description" content="一张照片 · 一段回忆 · 一趟旅行。上传照片，生成童年风格照，探索7个童年记忆角落。">
+<meta property="og:description" content="一张照片 · 一段回忆 · 一趟旅行。选择你的童年年代，生成专属童年照，探索7个童年记忆角落。">
 <meta property="og:image" content="og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -15,7 +15,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="童年时光机">
-<meta name="twitter:description" content="一张照片 · 一段回忆 · 一趟旅行。上传照片，生成童年风格照，探索7个童年记忆角落。">
+<meta name="twitter:description" content="一张照片 · 一段回忆 · 一趟旅行。选择你的童年年代，生成专属童年照。">
 <meta name="twitter:image" content="og-image.png">
 <meta itemprop="name" content="童年时光机">
 <meta itemprop="description" content="一张照片 · 一段回忆 · 一趟旅行。六一特别企划。">
@@ -32,7 +32,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .app{max-width:480px;margin:0 auto;min-height:100dvh;position:relative;overflow:hidden}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .5s;padding:20px 24px 40px;overflow-y:auto;opacity:0;pointer-events:none;transform:translateY(30px)}
 .screen.active{opacity:1;pointer-events:auto;transform:translateY(0);position:relative}
-.top-bar{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.top-bar{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-shrink:0}
 .back-btn{display:inline-flex;align-items:center;gap:4px;color:var(--pri);font-size:15px;font-weight:600;cursor:pointer;padding:8px;border:none;background:none;font-family:inherit}
 .back-btn:active{opacity:.6}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 36px;border:none;border-radius:50px;font-size:17px;font-weight:700;cursor:pointer;transition:all .3s;font-family:inherit;letter-spacing:1px;-webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation}
@@ -42,28 +42,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .btn-sm{padding:10px 24px;font-size:14px}
 .btn-block{width:100%}
 .btn-gold{background:linear-gradient(135deg,#E8B84B,#C8963E);color:#fff;box-shadow:0 6px 20px rgba(200,150,62,.4)}
-.mt-8{margin-top:8px}.mt-16{margin-top:16px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-40{margin-top:40px}
+.mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}.mt-20{margin-top:20px}.mt-24{margin-top:24px}.mt-32{margin-top:32px}.mt-40{margin-top:40px}
 
 /* Splash */
-.splash-logo{margin-top:50px;font-size:72px;animation:bounce 2s infinite}
+.splash-logo{margin-top:40px;font-size:72px;animation:bounce 2s infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
 .splash-title{font-size:32px;font-weight:900;color:var(--bn);margin-top:16px;text-shadow:2px 2px 0 rgba(212,136,92,.3);letter-spacing:2px}
 .splash-sub{color:var(--pri);font-size:15px;margin-top:8px;opacity:.8}
-.splash-decor{margin-top:30px;display:flex;gap:12px;font-size:32px}
+.splash-decor{margin-top:24px;display:flex;gap:14px;font-size:30px}
 .splash-decor span{animation:float 3s infinite}
-.splash-decor span:nth-child(2){animation-delay:.5s}
-.splash-decor span:nth-child(3){animation-delay:1s}
-.splash-decor span:nth-child(4){animation-delay:1.5s}
-.splash-decor span:nth-child(5){animation-delay:.3s}
+.splash-decor span:nth-child(2){animation-delay:.5s}.splash-decor span:nth-child(3){animation-delay:1s}.splash-decor span:nth-child(4){animation-delay:1.5s}.splash-decor span:nth-child(5){animation-delay:.3s}
 @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(5deg)}}
 .section-title{font-size:22px;font-weight:800;color:var(--bn);text-align:center}
 .section-desc{font-size:14px;color:var(--pri);text-align:center;margin-top:6px;opacity:.8}
 
+/* Year Picker */
+.year-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:360px;margin-top:24px}
+.year-card{padding:20px 16px;border-radius:20px;background:var(--card);border:3px solid transparent;cursor:pointer;transition:all .3s;text-align:center;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.year-card:active{transform:scale(.96)}
+.year-card.selected{border-color:var(--pri);box-shadow:0 4px 20px rgba(212,136,92,.25);background:#FFF5ED}
+.year-emoji{font-size:36px;display:block;margin-bottom:6px}
+.year-label{font-size:20px;font-weight:900;color:var(--bn);display:block}
+.year-desc{font-size:11px;color:#999;margin-top:4px;display:block}
+.year-tag{display:inline-block;padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;background:var(--pri);color:#fff;margin-top:6px}
+
 /* Upload */
-.upload-zone{width:100%;max-width:300px;aspect-ratio:1;border:3px dashed var(--pri);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card);cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.upload-zone{width:100%;max-width:280px;aspect-ratio:1;border:3px dashed var(--pri);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--card);cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
 .upload-zone:active{background:#FDE8D6;border-color:var(--red)}
 .upload-zone.has-photo{border-style:solid;border-color:var(--pri)}
-.upload-icon{font-size:52px;margin-bottom:12px;opacity:.7}
+.upload-icon{font-size:48px;margin-bottom:12px;opacity:.7}
 .upload-text{font-size:15px;color:var(--pri);font-weight:600}
 .upload-hint{font-size:12px;color:#999;margin-top:6px}
 .upload-preview{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;display:none}
@@ -71,22 +78,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 #uploadFile{display:none}
 
 /* Result */
-.result-photo{width:280px;height:280px;border-radius:24px;overflow:hidden;border:4px solid #fff;box-shadow:0 8px 40px rgba(60,36,21,.15);position:relative;background:#f0e0d0}
+.result-photo{width:270px;height:270px;border-radius:24px;overflow:hidden;border:4px solid #fff;box-shadow:0 8px 40px rgba(60,36,21,.15);position:relative;background:#f0e0d0;flex-shrink:0}
 .result-photo canvas{width:100%;height:100%;object-fit:cover}
+.result-info{text-align:center;margin-top:12px}
+.result-year-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700;background:var(--pri);color:#fff}
 .filter-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
 .filter-chip{padding:8px 16px;border-radius:50px;font-size:13px;font-weight:600;background:var(--card);color:var(--bn);border:2px solid transparent;cursor:pointer;transition:all .25s;white-space:nowrap}
 .filter-chip.active{background:var(--pri);color:#fff;border-color:var(--pri)}
 .filter-chip:active{transform:scale(.95)}
-.loading-dots{display:flex;gap:6px;justify-content:center;margin:24px 0}
-.loading-dots span{width:10px;height:10px;border-radius:50%;background:var(--pri);animation:dotBounce 1.4s infinite}
-.loading-dots span:nth-child(2){animation-delay:.2s}
-.loading-dots span:nth-child(3){animation-delay:.4s}
-@keyframes dotBounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
-.ai-btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;box-shadow:0 6px 20px rgba(102,126,234,.4);position:relative;overflow:hidden}
-.ai-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,#f093fb22,#f5576c22,#4facfe22);animation:shimmer 2s infinite}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .sparkle{animation:sparkle 1.5s infinite}
 @keyframes sparkle{0%,100%{opacity:1}50%{opacity:.3}}
+.loading-dots{display:flex;gap:6px;justify-content:center;margin:12px 0}
+.loading-dots span{width:10px;height:10px;border-radius:50%;background:var(--pri);animation:dotBounce 1.4s infinite}
+.loading-dots span:nth-child(2){animation-delay:.2s}.loading-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dotBounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
 
 /* Petals */
 .petals{position:fixed;inset:0;pointer-events:none;z-index:0}
@@ -94,13 +99,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 @keyframes petalFall{0%{transform:translateY(0) rotate(0) translateX(0);opacity:.7}50%{transform:translateY(50vh) rotate(180deg) translateX(40px);opacity:.5}100%{transform:translateY(105vh) rotate(360deg) translateX(-20px);opacity:0}}
 
 /* ===== MAP ===== */
-.map-wrap{width:100%;max-width:400px;aspect-ratio:4/5;position:relative;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(60,36,21,.1);border:3px solid #E8D5B0}
+.map-wrap{width:100%;max-width:400px;aspect-ratio:4/5;position:relative;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(60,36,21,.1);border:3px solid #E8D5B0;flex-shrink:0}
 .map-canvas{position:absolute;inset:0;width:100%;height:100%}
 .map-label{position:absolute;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,255,255,.9);color:var(--bn);box-shadow:0 2px 8px rgba(0,0,0,.1);cursor:pointer;transition:all .3s;white-space:nowrap;z-index:2;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1.5px solid rgba(212,136,92,.3)}
 .map-label:active{transform:scale(1.08);background:var(--pri);color:#fff}
 .map-label.visited{background:rgba(255,240,200,.95);border-color:var(--gold)}
-.map-avatar{position:absolute;width:44px;height:44px;border-radius:50%;border:3px solid var(--red);box-shadow:0 4px 12px rgba(196,56,58,.4);z-index:3;cursor:pointer;transition:all .4s;object-fit:cover;display:none;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275)}
-.map-avatar.show{display:block}
+.map-avatar{position:absolute;width:44px;height:44px;border-radius:50%;border:3px solid var(--red);box-shadow:0 4px 12px rgba(196,56,58,.4);z-index:3;cursor:pointer;transition:all .4s;object-fit:cover;display:none}
+.map-avatar.show{display:block;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275)}
 @keyframes popIn{0%{transform:scale(0) rotate(-20deg)}100%{transform:scale(1) rotate(0)}}
 
 /* Stickers */
@@ -108,22 +113,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .sticker-slot{width:40px;height:40px;border-radius:10px;border:2px dashed #DDD;display:flex;align-items:center;justify-content:center;font-size:18px;background:#fff;transition:all .3s}
 .sticker-slot.collected{border-style:solid;border-color:var(--gold);background:#FFF8E8;animation:popIn .4s ease}
 
-/* ===== IMMERSIVE SCENE (overlay) ===== */
+/* ===== IMMERSIVE SCENE ===== */
 .scene-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .scene-overlay.show{opacity:1;pointer-events:auto}
 .scene-card{width:92%;max-width:420px;max-height:85vh;background:#FFFDF7;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:scale(.9) translateY(20px);transition:transform .4s cubic-bezier(.32,.72,0,1)}
 .scene-overlay.show .scene-card{transform:scale(1) translateY(0)}
-.scene-bg{position:relative;height:220px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.scene-bg{position:relative;height:200px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .scene-body{padding:20px;overflow-y:auto;flex:1}
-.scene-stamp{width:70px;height:70px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;transform:rotate(-15deg);box-shadow:0 4px 16px rgba(196,56,58,.4);animation:stampIn .5s cubic-bezier(.175,.885,.32,1.275);display:none}
-.scene-stamp.show{display:flex}
+.scene-stamp{width:70px;height:70px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 12px;transform:rotate(-15deg);box-shadow:0 4px 16px rgba(196,56,58,.4);display:none}
+.scene-stamp.show{display:flex;animation:stampIn .5s cubic-bezier(.175,.885,.32,1.275)}
 @keyframes stampIn{0%{transform:scale(3) rotate(-50deg);opacity:0}100%{transform:scale(1) rotate(-15deg);opacity:1}}
-.scene-emoji{font-size:64px;text-align:center;line-height:1;position:relative;z-index:2}
+.scene-emoji{font-size:56px;text-align:center;line-height:1;position:relative;z-index:2}
 .scene-title{font-size:22px;font-weight:900;color:var(--bn);text-align:center;margin-top:8px}
 .scene-desc{font-size:14px;color:#6B4226;text-align:center;line-height:1.8;margin-top:12px}
+.scene-era-note{font-size:12px;color:var(--pri);text-align:center;margin-top:8px;font-style:italic;opacity:.8}
 .scene-interact{margin-top:16px;position:relative;min-height:60px}
 
-/* Scene-specific backgrounds */
 .bg-school{background:linear-gradient(180deg,#C8D8C0 0%,#D8E0D0 40%,#E8D5B0 60%,#D4C4A0 100%)}
 .bg-shop{background:linear-gradient(180deg,#F5E6D0 0%,#EDD8B8 50%,#E0C8A0 100%)}
 .bg-play{background:linear-gradient(180deg,#A8D8EA 0%,#C8E8F0 40%,#B8D898 60%,#A0C880 100%)}
@@ -132,16 +137,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .bg-arcade{background:linear-gradient(180deg,#2A1A3A 0%,#3A2A5A 50%,#1A0A2A 100%)}
 .bg-stream{background:linear-gradient(180deg,#A8D8F0 0%,#C0E8F8 30%,#80C8A0 60%,#60A080 100%)}
 
-/* Interactive elements in scenes */
-.chalkboard{position:relative;width:160px;height:100px;background:#3A5A40;border:6px solid #8B6914;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+/* Interactive elements */
+.chalkboard{position:relative;width:160px;height:100px;background:#3A5A40;border:6px solid #8B6914;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);margin:0 auto}
 .chalkboard::after{content:'点击擦黑板';color:rgba(255,255,255,.6);font-size:14px}
 .chalkboard.erased{background:#4A6A50}
 .chalkboard.erased::after{content:'🌻 好好学习 天天向上';color:rgba(255,255,200,.9);font-size:11px}
 
 .shop-shelf{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:8px}
 .shop-item{width:55px;height:65px;background:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:all .3s;font-size:28px}
-.shop-item:active{transform:scale(1.1);box-shadow:0 4px 16px rgba(212,136,92,.3)}
-.shop-item .tag{font-size:10px;color:var(--pri);margin-top:2px;font-weight:600}
+.shop-item:active{transform:scale(1.1)}.shop-item .tag{font-size:10px;color:var(--pri);margin-top:2px;font-weight:600}
 .shop-item.picked{background:#FFF3CD;border:2px solid var(--gold);animation:popIn .3s ease}
 
 .arcade-game{width:100%;max-width:300px;height:180px;background:#1a1a2e;border-radius:12px;position:relative;overflow:hidden;border:3px solid #333;margin:0 auto}
@@ -150,8 +154,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .arcade-score{color:#FFD700;font-size:20px;font-weight:900;text-align:center;padding:8px;font-family:monospace}
 .arcade-mole{position:absolute;width:50px;height:50px;border-radius:50%;background:#C8963E;display:flex;align-items:center;justify-content:center;font-size:24px;transition:bottom .15s;pointer-events:none}
 
-.stream-scene{position:relative;width:100%;height:120px;margin:0 auto}
-.stream-stone{position:absolute;width:30px;height:20px;background:#999;border-radius:50%;cursor:grab;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .1s}
+.stream-scene{position:relative;width:100%;height:100px;margin:0 auto}
+.stream-stone{position:absolute;width:30px;height:20px;background:#999;border-radius:50%;cursor:grab;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .1s;touch-action:none}
 .stream-stone:active{cursor:grabbing;transform:scale(.9)}
 .stream-ripple{position:absolute;border-radius:50%;border:2px solid rgba(255,255,255,.6);animation:ripple 1s ease-out forwards;pointer-events:none}
 @keyframes ripple{0%{width:10px;height:5px;opacity:1}100%{width:80px;height:40px;opacity:0}}
@@ -162,12 +166,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .play-swing.swinging .play-swing-seat{animation:swing 2s ease-in-out infinite}
 @keyframes swing{0%,100%{transform:translateX(-50%) rotate(-15deg)}50%{transform:translateX(-50%) rotate(15deg)}}
 
-/* Confetti */
 .confetti{position:fixed;pointer-events:none;z-index:1000;inset:0}
 .confetti-piece{position:absolute;animation:confettiFall 3s ease-out forwards}
 @keyframes confettiFall{0%{transform:translateY(0) rotate(0) scale(1);opacity:1}100%{transform:translateY(100vh) rotate(720deg) scale(0);opacity:0}}
 
-/* Share */
 .share-card{background:#fff;border-radius:20px;padding:24px;box-shadow:0 4px 24px rgba(60,36,21,.1);text-align:center;width:100%;max-width:360px;margin-top:24px;display:none}
 .share-card.show{display:block}
 .share-stats{display:flex;gap:20px;justify-content:center;margin-top:16px}
@@ -175,7 +177,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .share-stat-num{font-size:28px;font-weight:900;color:var(--red)}
 .share-stat-label{font-size:12px;color:#999}
 
-@media(max-width:360px){.splash-title{font-size:26px}.btn{padding:12px 28px;font-size:15px}.section-title{font-size:19px}}
+@media(max-width:360px){.splash-title{font-size:26px}.btn{padding:12px 28px;font-size:15px}.section-title{font-size:19px}.year-emoji{font-size:28px}.year-label{font-size:17px}}
 </style>
 </head>
 <body>
@@ -186,17 +188,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 <div class="screen active" id="screen-splash">
 <div class="splash-logo">🧒</div>
 <div class="splash-title">回到童年</div>
-<div class="splash-sub">一张照片 · 一段回忆 · 一趟旅行</div>
+<div class="splash-sub">选个年代 · 拍张照 · 回到过去</div>
 <div class="splash-decor"><span>🍭</span><span>🎈</span><span>🎠</span><span>📚</span><span>🪁</span></div>
-<button class="btn btn-pri mt-40" onclick="goTo('upload')">开始时光旅行 ✨</button>
+<button class="btn btn-pri mt-40" onclick="goTo('year')">开始时光旅行 ✨</button>
 <div style="margin-top:32px;font-size:12px;color:#CCC">六一特别企划 · 2026</div>
+</div>
+
+<!-- YEAR SELECTION -->
+<div class="screen" id="screen-year">
+<div class="top-bar"><button class="back-btn" onclick="goTo('splash')">← 返回</button><span style="font-size:13px;color:#999">Step 1/4</span></div>
+<div class="section-title">📅 你的童年在哪个年代？</div>
+<div class="section-desc">不同年代的童年，有不同的味道</div>
+<div class="year-grid" id="yearGrid">
+<div class="year-card" data-year="1970" onclick="selectYear(this,'1970')">
+<span class="year-emoji">📻</span><span class="year-label">70 年代</span>
+<span class="year-desc">铁皮玩具 · 露天电影</span><span class="year-tag">黑白记忆</span>
+</div>
+<div class="year-card" data-year="1980" onclick="selectYear(this,'1980')">
+<span class="year-emoji">📺</span><span class="year-label">80 年代</span>
+<span class="year-desc">小霸王 · 跳皮筋</span><span class="year-tag">金黄年代</span>
+</div>
+<div class="year-card" data-year="1990" onclick="selectYear(this,'1990')">
+<span class="year-emoji">💿</span><span class="year-label">90 年代</span>
+<span class="year-desc">动漫卡 · 四驱车</span><span class="year-tag">缤纷多彩</span>
+</div>
+<div class="year-card" data-year="2000" onclick="selectYear(this,'2000')">
+<span class="year-emoji">💻</span><span class="year-label">00 年代</span>
+<span class="year-desc">QQ秀 · 拓麻歌子</span><span class="year-tag">数码童年</span>
+</div>
+<div class="year-card" data-year="2010" onclick="selectYear(this,'2010')">
+<span class="year-emoji">📱</span><span class="year-label">10 年代</span>
+<span class="year-desc">iPad · 小猪佩奇</span><span class="year-tag">触屏一代</span>
+</div>
+</div>
 </div>
 
 <!-- UPLOAD -->
 <div class="screen" id="screen-upload">
-<div class="top-bar"><button class="back-btn" onclick="goTo('splash')">← 返回</button><span style="font-size:13px;color:#999">Step 1/3</span></div>
+<div class="top-bar"><button class="back-btn" onclick="goTo('year')">← 返回</button><span style="font-size:13px;color:#999">Step 3/4</span></div>
 <div class="section-title">📷 上传一张照片</div>
-<div class="section-desc">选一张正脸近照，帮你找回童年的样子</div>
+<div class="section-desc" id="uploadEraHint">选一张正脸近照，帮你生成专属童年照</div>
 <div class="upload-zone mt-24" id="uploadZone" onclick="document.getElementById('uploadFile').click()">
 <span class="upload-icon">📸</span>
 <span class="upload-text">点击或拖拽上传照片</span>
@@ -204,52 +235,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 <img class="upload-preview" id="uploadPreview" alt="">
 </div>
 <input type="file" id="uploadFile" accept="image/*" onchange="handleUpload(this)">
-<button class="btn btn-pri btn-block mt-24" id="btnNext" disabled onclick="processPhoto()">下一步 → 生成童年照</button>
+<button class="btn btn-pri btn-block mt-24" id="btnNext" disabled onclick="processPhoto()">生成童年照 →</button>
 <div style="margin-top:12px;font-size:12px;color:#999;text-align:center">照片仅在你的设备上处理，不上传服务器</div>
 </div>
 
 <!-- RESULT -->
 <div class="screen" id="screen-result">
-<div class="top-bar"><button class="back-btn" onclick="goTo('upload')">← 返回</button><span style="font-size:13px;color:#999">Step 2/3</span></div>
-<div class="section-title">✨ 你的童年记忆</div>
-<div class="section-desc" id="filterDesc">试试不同滤镜，或点击AI魔法生成真正的童年照</div>
-<div class="result-photo mt-24"><canvas id="resultCanvas"></canvas></div>
-<div class="filter-row">
-<span class="filter-chip active" onclick="applyFilter('baby',this)">👶 婴儿脸</span>
-<span class="filter-chip" onclick="applyFilter('vintage',this)">📜 泛黄旧照</span>
-<span class="filter-chip" onclick="applyFilter('dream',this)">💭 梦境童年</span>
-<span class="filter-chip" onclick="applyFilter('sketch',this)">✏️ 彩铅手绘</span>
-</div>
-<button class="btn ai-btn btn-block mt-16" id="btnAI" onclick="requestAI()">
-<span class="sparkle">✨</span> AI 魔法——真正生成你的童年照 <span class="sparkle">✨</span>
-</button>
-<div id="aiStatus" style="margin-top:8px;font-size:13px;color:var(--pri);text-align:center;display:none"></div>
-<button class="btn btn-pri btn-block mt-16" onclick="goTo('map')">进入时光地图 🗺️</button>
+<div class="top-bar"><button class="back-btn" onclick="goTo('upload')">← 返回</button><span style="font-size:13px;color:#999">Step 4/4</span></div>
+<div class="section-title">✨ 你的<span id="resultYearLabel">童年</span>记忆</div>
+<div class="section-desc" id="filterDesc">这是你<span id="resultYearEra">那个年代</span>的样子</div>
+<div class="result-photo mt-20"><canvas id="resultCanvas"></canvas></div>
+<div class="filter-row" id="filterRow"></div>
+<button class="btn btn-pri btn-block mt-20" onclick="goTo('map')">进入时光地图 🗺️</button>
 </div>
 
 <!-- MAP -->
 <div class="screen" id="screen-map">
-<div class="top-bar"><button class="back-btn" onclick="goTo('result')">← 返回</button><span style="font-size:13px;color:#999">Step 3/3</span></div>
+<div class="top-bar"><button class="back-btn" onclick="goTo('result')">← 返回</button><span style="font-size:13px;color:#999">探索</span></div>
 <div class="section-title">🗺️ 童年小镇</div>
 <div class="section-desc">点击地点，进入沉浸式童年回忆</div>
 <div class="map-wrap mt-16" id="mapWrap">
 <canvas class="map-canvas" id="mapCanvas"></canvas>
 </div>
 <div class="sticker-bar" id="stickerBar">
-<div class="sticker-slot" data-loc="school">🏫</div>
-<div class="sticker-slot" data-loc="shop">🏪</div>
-<div class="sticker-slot" data-loc="playground">🎠</div>
-<div class="sticker-slot" data-loc="park">🌳</div>
-<div class="sticker-slot" data-loc="grandma">🏠</div>
-<div class="sticker-slot" data-loc="arcade">🕹️</div>
+<div class="sticker-slot" data-loc="school">🏫</div><div class="sticker-slot" data-loc="shop">🏪</div>
+<div class="sticker-slot" data-loc="playground">🎠</div><div class="sticker-slot" data-loc="park">🌳</div>
+<div class="sticker-slot" data-loc="grandma">🏠</div><div class="sticker-slot" data-loc="arcade">🕹️</div>
 <div class="sticker-slot" data-loc="stream">🌊</div>
 </div>
 <div style="text-align:center;font-size:12px;color:#999;margin-top:4px">已收集: <span id="stickerCount">0</span>/7</div>
 <div class="share-card" id="shareCard">
 <div style="font-size:40px">🎉</div>
 <div style="font-size:20px;font-weight:900;color:var(--red);margin-top:8px">全部收集完毕！</div>
-<div style="font-size:14px;color:var(--bn);margin-top:4px">你已经走遍了童年的每一个角落</div>
-<div class="share-stats"><div class="share-stat"><div class="share-stat-num">7</div><div class="share-stat-label">地点</div></div>
+<div style="font-size:14px;color:var(--bn);margin-top:4px">你已经走遍了<span id="shareEra">童年</span>的每一个角落</div>
+<div class="share-stats"><div class="share-stat"><div class="share-stat-num" id="shareStickers">7</div><div class="share-stat-label">地点</div></div>
 <div class="share-stat"><div class="share-stat-num" id="totalMinutes">0</div><div class="share-stat-label">分钟回忆</div></div>
 <div class="share-stat"><div class="share-stat-num">1</div><div class="share-stat-label">张童年照</div></div></div>
 <button class="btn btn-pri btn-block mt-16" onclick="shareResult()">📤 分享给朋友</button>
@@ -265,6 +284,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 <div class="scene-emoji" id="sceneEmoji"></div>
 <div class="scene-title" id="sceneTitle"></div>
 <div class="scene-desc" id="sceneDesc"></div>
+<div class="scene-era-note" id="sceneEraNote"></div>
 <div class="scene-interact" id="sceneInteract"></div>
 <button class="btn btn-gold btn-block mt-16" id="sceneCollectBtn" onclick="collectAndClose()">💝 收藏这份回忆</button>
 </div>
@@ -275,123 +295,277 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 
 <script>
 // ===== STATE =====
-let uploadedImage = null, currentFilter = 'baby', visitedLocations = new Set(), startTime = Date.now();
-const AI_BACKEND = '';
+let uploadedImage=null,currentFilter='auto',visitedLocations=new Set(),startTime=Date.now(),selectedYear='1990';
 
-// ===== LOCATION DATA =====
-const locations = {
+// ===== YEAR DATA =====
+const yearData={
+'1970':{label:'70年代',emoji:'📻',color:'#6B7B6B',tone:'黑白记忆',tag:'黑白回忆',
+filters:[
+{id:'bw',name:'📷 黑白老照片',icon:'🖤'},
+{id:'sepia',name:'🟤 深棕怀旧',icon:'🤎'},
+{id:'vintage70',name:'📜 发黄旧照',icon:'💛'},
+{id:'grain',name:'🎞️ 胶片颗粒',icon:'📽️'}
+],
+eraWord:'那个朴素年代',mapTone:{sky:'#E8E0D0',ground:'#C8BFA8',build:'#D0C8B0'},
+locationOverrides:{arcade:{name:'露天电影院',emoji:'🎬',bg:'bg-park',desc:'傍晚搬着小马扎去广场占位子，幕布在晚风里鼓起来。放映机咔嗒咔嗒地转，所有人都仰着头，眼睛亮晶晶的。那是整个夏天最隆重的节日。'}}
+},
+'1980':{label:'80年代',emoji:'📺',color:'#D4885C',tone:'金黄年代',tag:'温暖记忆',
+filters:[
+{id:'vintage80',name:'📷 复古暖调',icon:'🧡'},
+{id:'fade',name:'🌅 岁月褪色',icon:'💛'},
+{id:'polaroid',name:'🖼️ 宝丽来',icon:'🤍'},
+{id:'baby80',name:'👶 童年柔光',icon:'💝'}
+],
+eraWord:'那个黄金年代',mapTone:{sky:'#FAF0DC',ground:'#E8D5B0',build:'#E8C9A0'},
+locationOverrides:{}
+},
+'1990':{label:'90年代',emoji:'💿',color:'#C4383A',tone:'缤纷多彩',tag:'彩色回忆',
+filters:[
+{id:'vivid90',name:'🎨 鲜艳童年',icon:'💚'},
+{id:'vhs',name:'📼 VHS录像带',icon:'💙'},
+{id:'neon',name:'🌈 霓虹记忆',icon:'💜'},
+{id:'baby90',name:'👶 童年柔光',icon:'💝'}
+],
+eraWord:'那个缤纷年代',mapTone:{sky:'#E8F0F8',ground:'#E0D8C0',build:'#F0D5B0'},
+locationOverrides:{}
+},
+'2000':{label:'00年代',emoji:'💻',color:'#4A90D9',tone:'数码童年',tag:'Y2K回忆',
+filters:[
+{id:'digital00',name:'📷 数码相机',icon:'💙'},
+{id:'y2k',name:'✨ Y2K风格',icon:'🩵'},
+{id:'webcam',name:'🎥 摄像头风',icon:'💚'},
+{id:'baby00',name:'👶 童年柔光',icon:'💝'}
+],
+eraWord:'那个千禧年代',mapTone:{sky:'#E0ECFF',ground:'#D8D0C8',build:'#E0D8D0'},
+locationOverrides:{arcade:{name:'网吧',emoji:'💻',bg:'bg-arcade',desc:'偷偷溜进弥漫着烟味的网吧，键盘噼里啪啦响。CS的枪声、传奇的砍怪声混在一起。网管喊着"包夜10块"，你攥着皱巴巴的零花钱犹豫了很久。'}}
+},
+'2010':{label:'10年代',emoji:'📱',color:'#7B68EE',tone:'触屏一代',tag:'智能回忆',
+filters:[
+{id:'insta',name:'📱 复古滤镜',icon:'💜'},
+{id:'hd',name:'📸 高清回忆',icon:'🩷'},
+{id:'glitch',name:'💾 数字故障',icon:'💚'},
+{id:'baby10',name:'👶 童年柔光',icon:'💝'}
+],
+eraWord:'那个触屏时代',mapTone:{sky:'#F5F0FF',ground:'#E8E0D8',build:'#E8D8E0'},
+locationOverrides:{arcade:{name:'手游吧',emoji:'📱',bg:'bg-arcade',desc:'放学后围在一起联机打王者，充电宝传来传去。"别送啊！""我卡了！"喊得面红耳赤，友谊的小船说翻就翻，第二天又笑嘻嘻凑在一起。'}}
+}};
+
+// ===== BASE LOCATION DATA =====
+const baseLocations = {
 school:{emoji:'🏫',name:'红星小学',bg:'bg-school',
-desc:'叮铃铃的下课铃响了。你坐在靠窗的位置，阳光透过梧桐叶洒在课本上。黑板上是还没擦掉的粉笔字——「我的梦想」。那个总揪你辫子的同桌，偷偷在你铅笔盒里放了颗大白兔奶糖。'},
+descs:{
+'1970':{main:'土操场上扬起灰尘，铁钟铛铛响彻整个村子。课本是油印的，字迹模糊但每一页都被翻得起了毛边。你的铅笔盒是铁皮的，里面躺着削得短短的铅笔和一块香橡皮。',note:'铁皮铅笔盒 · 油印课本 · 露天早操'},
+'1980':{main:'叮铃铃的下课铃响了。你坐在靠窗的位置，阳光透过梧桐叶洒在课本上。黑板上是还没擦掉的粉笔字——「我的梦想」。那个总揪你辫子的同桌，偷偷在你铅笔盒里放了颗大白兔奶糖。',note:'大白兔奶糖 · 小霸王学习机 · 跳皮筋'},
+'1990':{main:'教学楼刷着淡绿色的墙裙，走廊里回荡着琅琅读书声。课间十分钟冲向小卖部买辣条，上课铃响了才慌忙跑回来。文具盒上是美少女战士的贴纸，书皮包得整整齐齐。',note:'辣条五毛 · 美少女战士 · 多功能文具盒'},
+'2000':{main:'教室里装了投影仪，老师用PPT上课。你和同桌在课桌下偷偷传纸条，上面画着火柴人和火星文。QQ号写在纸条上，约好放学后"网上见"。',note:'QQ号 · 火星文 · 按键手机'},
+'2010':{main:'教室里每人都有一台平板，校服是运动款。课间讨论的不是作业是最新游戏。老师用企业微信发通知，家长群里消息响个不停。',note:'平板课堂 · 校服 · 家长群'}
+}},
 shop:{emoji:'🏪',name:'阿婆小卖部',bg:'bg-shop',
-desc:'推开玻璃门，叮当一声响。五毛钱的辣条、一毛钱的果丹皮、两毛钱的冰袋。你攥着攒了三天的五毛钱，在琳琅满目的零食前纠结了很久很久。'},
+descs:{
+'1970':{main:'昏暗的柜台后面，阿婆戴着老花镜。玻璃罐里装着五颜六色的水果糖，一分钱一颗。你攥着攒了一个月的两分钱，在柜台前踮起脚尖犹豫了好久。',note:'水果糖 · 竹蜻蜓 · 铁皮青蛙'},
+'1980':{main:'推开玻璃门，叮当一声响。五毛钱的辣条、一毛钱的果丹皮、两毛钱的冰袋。你攥着攒了三天的五毛钱，在琳琅满目的零食前纠结了很久很久。',note:'辣条 · 果丹皮 · 冰袋 · 大大泡泡糖'},
+'1990':{main:'玻璃柜台上摆着奇多圈、小浣熊干脆面里的水浒卡。冰箱里是绿舌头冰棍。你和同学凑钱买一包干脆面，就为了里面那张稀有卡。',note:'水浒卡 · 奇多 · 绿舌头 · 泡泡胶'},
+'2000':{main:'货架上从辣条升级到了薯片和奥利奥，冰柜里有可爱多。最受欢迎的是五毛一包的咪咪虾条和可以集卡的魔法士干脆面。',note:'魔法士 · 咪咪 · 可爱多 · 大大卷'},
+'2010':{main:'连锁便利店取代了小卖部，扫码支付叮一声。但偶尔在街角发现一家老式杂货铺，还是会进去买一包辣条，味道没变。',note:'扫码支付 · 老式辣条 · 童年味道'}
+}},
 playground:{emoji:'🎠',name:'街心游乐场',bg:'bg-play',
-desc:'秋千荡得比天还高，风吹过耳边的时候，你觉得自己在飞。滑梯永远排着长队，跷跷板那头坐着的，是放学后第一个冲出校门的小伙伴。'},
+descs:{
+'1970':{main:'水泥滑梯磨得锃亮，铁质转椅转快了会把人甩出去。秋千就是用麻绳吊着块木板，荡高了吱吱响。没有塑胶地面，摔倒了膝盖蹭破皮，爬起来拍拍土继续疯。',note:'水泥滑梯 · 铁转椅 · 弹珠'},
+'1980':{main:'秋千荡得比天还高，风吹过耳边的时候你觉得自己在飞。滑梯永远排着长队，跷跷板那头坐着的，是放学后第一个冲出校门的小伙伴。',note:'木头秋千 · 沙坑 · 捉迷藏'},
+'1990':{main:'游乐场换了彩色塑胶地面，有了弹簧摇摇马和攀爬架。但最喜欢的还是那片沙坑，挖隧道能挖一下午。旁边有卖棉花糖的，一团两块钱。',note:'弹簧马 · 棉花糖 · 沙坑城堡'},
+'2000':{main:'小区里的组合滑梯红黄蓝三色，秋千要排队。妈妈在长椅上看着，你和小伙伴从滑梯上冲下来，一遍又一遍直到被喊回家吃饭。',note:'组合滑梯 · 摇摇车 · 扭扭车'},
+'2010':{main:'商场里的室内游乐场，海洋球池和蹦床。有安全员看着，地面全是软包。好玩是好玩，但总觉得少了点风吹日晒的那种野趣。',note:'室内游乐场 · 海洋球 · 蹦床'}
+}},
 park:{emoji:'🌳',name:'人民公园',bg:'bg-park',
-desc:'春天放风筝、夏天捉知了、秋天捡银杏叶夹在书里、冬天打雪仗堆雪人。公园里那条走了无数遍的小路，每一块石板你都认得。'},
+descs:{
+'1970':{main:'公园里有条小河沟，夏天用竹竿系根线就能钓小龙虾。假山爬上去能看到整个城。老人在树下下象棋，收音机里播着评书，你一坐就是一下午。',note:'钓龙虾 · 听评书 · 爬假山'},
+'1980':{main:'春天放风筝、夏天捉知了、秋天捡银杏叶夹在书里、冬天打雪仗堆雪人。公园里那条走了无数遍的小路，每一块石板你都认得。',note:'放风筝 · 捉知了 · 糖画'},
+'1990':{main:'公园里多了游乐区——碰碰车、旋转木马，每次都央求妈妈"再玩一次"。湖里可以划船，脚踩的那种天鹅船，踩得满头大汗。',note:'碰碰车 · 划船 · 喂鸽子'},
+'2000':{main:'公园里多了健身器材和塑胶跑道。周末全家来野餐，妈妈带着寿司和三明治。你在草地上翻跟头，风筝线缠在了树上，爸爸爬上去解。',note:'野餐 · 轮滑 · 放风筝'},
+'2010':{main:'公园里有共享单车可以骑着兜风，草地上有人在练瑜伽。但周末人太多，拍个照都要排队。偶尔早起去，晨光里的公园依然很美。',note:'共享单车 · 野餐垫 · 晨跑'}
+}},
 grandma:{emoji:'🏠',name:'外婆家小院',bg:'bg-grandma',
-desc:'推开吱呀的木门，院里晾着刚洗的棉被，阳光的味道暖烘烘的。厨房飘来红烧肉的香味，外婆探出头笑着说"乖孙回来啦"，手在围裙上擦了擦。'},
+descs:{
+'1970':{main:'土墙青瓦，院里种着丝瓜和豆角。外婆在灶台前添柴火，锅里的米汤咕嘟咕嘟冒泡。她往你手里塞了一个热乎乎的烤红薯，手糙糙的，但有柴火的味道。',note:'柴火灶 · 烤红薯 · 补丁衣裳'},
+'1980':{main:'推开木门，院里晾着刚洗的棉被，阳光的味道暖烘烘的。厨房飘来红烧肉的香味，外婆探出头笑着说"乖孙回来啦"，手在围裙上擦了擦。',note:'红烧肉 · 缝纫机 · 蒲扇'},
+'1990':{main:'小院里多了台冰箱，外婆总在里面藏着给你的雪糕。夏天的傍晚，搬出竹床在院里乘凉。外婆摇着蒲扇赶蚊子，数着天上的星星。',note:'冰箱雪糕 · 竹床乘凉 · 数星星'},
+'2000':{main:'外婆学会了用手机视频通话，每次都说"又瘦了"。过年回去，她还是会做一桌子菜，塞给你红包的时候偷偷比去年多放了几张。',note:'视频通话 · 年夜饭 · 红包'},
+'2010':{main:'外婆家的老房子拆了，搬进了电梯楼。但她还是在阳台上种了小葱和辣椒。打开冰箱，永远有你爱喝的酸奶和切好的水果。',note:'电梯楼 · 阳台菜园 · 酸奶水果'}
+}},
 arcade:{emoji:'🕹️',name:'街机游戏厅',bg:'bg-arcade',
-desc:'投币的脆响、拳皇的KO、合金弹头的突突声。攒了一周的早餐钱，猫着腰溜进去。老板睁一只眼闭一只眼——"别告诉你妈啊"。'},
+descs:{
+'1970':{main:'没有游戏厅的年代，最好玩的是滚铁环和打弹珠。傍晚巷子里全是孩子的笑声，铁环滚过石板路哐当哐当响。谁有一袋玻璃弹珠，就是全班最富的人。',note:'滚铁环 · 弹珠 · 拍画片'},
+'1980':{main:'投币的脆响、拳皇的KO、合金弹头的突突声。攒了一周的早餐钱，猫着腰溜进去。老板睁一只眼闭一只眼——"别告诉你妈啊"。',note:'拳皇97 · 合金弹头 · 街头霸王'},
+'1990':{main:'游戏厅里最火的是拳皇和恐龙快打。后来有了PS游戏机，3块钱一小时。光头老板会在你被家长抓走时掩护你："他刚来，就看看"。',note:'拳皇 · PS游戏机 · 数码宝贝'},
+'2000':{main:'网吧取代了游戏厅，CS、传奇、魔兽世界。包夜10块钱，和一排同学连坐。戴着耳机听周杰伦，泡面汤溅到键盘上也不在乎。',note:'CS · 传奇 · 劲舞团 · 周杰伦'},
+'2010':{main:'手游时代，王者荣耀、吃鸡、原神。充值648抽卡的刺激，比当年投币更上头。但偶尔在商场看到一台老式街机，还是会投一个币。',note:'王者 · 吃鸡 · 原神 · 怀旧街机'}
+}},
 stream:{emoji:'🌊',name:'小河边',bg:'bg-stream',
-desc:'夏天卷起裤腿踩进清凉的河水，小石子硌着脚底板痒痒的。用扁石头打水漂——一个、两个、三个……直到夕阳把水面染成金色。'}
+descs:{
+'1970':{main:'河水清得能看见底，卷起裤腿摸鱼，用簸箕捞小虾。女人们在河边洗衣，棒槌捶得啪啪响。你在水里泡到嘴唇发紫，被大人揪着耳朵拎回家。',note:'摸鱼捉虾 · 河边洗衣 · 竹筏'},
+'1980':{main:'夏天卷起裤腿踩进清凉的河水，小石子硌着脚底板痒痒的。用扁石头打水漂——一个、两个、三个……直到夕阳把水面染成金色。',note:'打水漂 · 捉蝌蚪 · 柳条帽'},
+'1990':{main:'带着塑料水枪在河边打水仗，浑身湿透才尽兴。岸边有小贩推着自行车卖冰棍，用被子盖着泡沫箱保温。咬一口透心凉。',note:'水枪大战 · 冰棍 · 野炊'},
+'2000':{main:'小河被修整成了景观河，两边铺了步道。不能下水了，但可以沿着河边骑自行车。偶尔看到有人在钓鱼，一坐就是一上午。',note:'河边骑行 · 钓鱼 · 遛狗'},
+'2010':{main:'城市里的河变成了湿地公园，有观景台和科普牌。孩子们在划定区域里捞小鱼，有志愿者教认水鸟。河还是那条河，故事不一样了。',note:'湿地公园 · 观鸟 · 环保科普'}
+}}
 };
 
 // ===== INIT =====
-function init(){createPetals();setupDragDrop();document.getElementById('resultCanvas').width=560;document.getElementById('resultCanvas').height=560}
-function createPetals(){const c=document.getElementById('petals'),t=['🌸','🍂','🍃','💮','🌺'];for(let i=0;i<20;i++){const p=document.createElement('span');p.className='petal';p.textContent=t[i%t.length];p.style.left=Math.random()*100+'%';p.style.animationDuration=(8+Math.random()*12)+'s';p.style.animationDelay=Math.random()*15+'s';p.style.fontSize=(10+Math.random()*16)+'px';c.appendChild(p)}}
+function init(){createPetals();setupDragDrop();document.getElementById('resultCanvas').width=540;document.getElementById('resultCanvas').height=540}
+function createPetals(){const c=document.getElementById('petals'),t=['🌸','🍂','🍃','💮','🌺'];for(let i=0;i<22;i++){const p=document.createElement('span');p.className='petal';p.textContent=t[i%t.length];p.style.left=Math.random()*100+'%';p.style.animationDuration=(8+Math.random()*12)+'s';p.style.animationDelay=Math.random()*15+'s';p.style.fontSize=(10+Math.random()*16)+'px';c.appendChild(p)}}
 
 // ===== NAVIGATION =====
-function goTo(name){document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.position='absolute'});const t=document.getElementById('screen-'+name);t.classList.add('active');t.style.position='relative';if(name==='map')setTimeout(()=>{const w=document.getElementById('mapWrap');w.querySelectorAll('.map-label').forEach(l=>l.remove());drawMap();updateMapAvatar()},100);setTimeout(()=>t.scrollTop=0,50)}
+function goTo(name){
+document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.position='absolute'});
+const t=document.getElementById('screen-'+name);t.classList.add('active');t.style.position='relative';
+if(name==='year')renderYearCards();
+if(name==='upload'){const h=document.getElementById('uploadEraHint');const yd=yearData[selectedYear];h.textContent='选一张正脸近照，生成你'+yd.label+'专属童年照'}
+if(name==='result')updateResultUI();
+if(name==='map'){setTimeout(()=>{const w=document.getElementById('mapWrap');w.querySelectorAll('.map-label').forEach(l=>l.remove());drawMap();updateMapAvatar()},150)}
+setTimeout(()=>t.scrollTop=0,50)
+}
+
+// ===== YEAR SELECTION =====
+function renderYearCards(){
+document.querySelectorAll('.year-card').forEach(c=>c.classList.toggle('selected',c.dataset.year===selectedYear));
+}
+function selectYear(el,year){
+selectedYear=year;renderYearCards();
+setTimeout(()=>goTo('upload'),400);
+}
 
 // ===== UPLOAD =====
-function setupDragDrop(){const z=document.getElementById('uploadZone');z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('dragover')});z.addEventListener('dragleave',()=>z.classList.remove('dragover'));z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('dragover');const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))loadImage(f)})}
+function setupDragDrop(){const z=document.getElementById('uploadZone');z.addEventListener('dragover',e=>{e.preventDefault()});z.addEventListener('drop',e=>{e.preventDefault();const f=e.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))loadImage(f)})}
 function handleUpload(i){const f=i.files[0];if(f)loadImage(f)}
 function loadImage(f){const r=new FileReader();r.onload=function(e){uploadedImage=new Image();uploadedImage.onload=function(){document.getElementById('uploadPreview').src=e.target.result;document.getElementById('uploadPreview').classList.add('show');document.getElementById('uploadZone').classList.add('has-photo');document.getElementById('btnNext').disabled=false};uploadedImage.src=e.target.result};r.readAsDataURL(f)}
 
 // ===== PHOTO PROCESSING =====
-function processPhoto(){if(!uploadedImage)return;goTo('result');setTimeout(()=>applyFilter('baby',document.querySelector('.filter-chip.active')),300)}
+function processPhoto(){if(!uploadedImage)return;goTo('result');setTimeout(()=>applyFilter('auto',null),300)}
+
+function updateResultUI(){
+const yd=yearData[selectedYear];
+document.getElementById('resultYearLabel').textContent=yd.label;
+document.getElementById('resultYearEra').textContent=yd.eraWord;
+// Render filter buttons
+const row=document.getElementById('filterRow');
+row.innerHTML='<span class="filter-chip active" onclick="applyFilter(\'auto\',this)">✨ '+yd.label+'专属</span>';
+yd.filters.forEach(f=>{row.innerHTML+='<span class="filter-chip" onclick="applyFilter(\''+f.id+'\',this)">'+f.name+'</span>'});
+// Update share card
+document.getElementById('shareEra').textContent=yd.label;
+}
 
 function applyFilter(filter,el){
-currentFilter=filter;document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');
-const c=document.getElementById('resultCanvas'),ctx=c.getContext('2d'),s=560;c.width=s;c.height=s;
+currentFilter=filter;
+if(el){document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
+const c=document.getElementById('resultCanvas'),ctx=c.getContext('2d'),s=540;c.width=s;c.height=s;
 const img=uploadedImage,src=Math.min(img.width,img.height),sx=(img.width-src)/2,sy=(img.height-src)/2;
 ctx.clearRect(0,0,s,s);
 ctx.save();roundedClip(ctx,s);ctx.drawImage(img,sx,sy,src,src,0,0,s,s);
 
-const d=ctx.getImageData(0,0,s,s),p=d.data;
+const d=ctx.getImageData(0,0,s,s),p=d.data,yd=yearData[selectedYear];
+
+// Apply the filter
 switch(filter){
-case'baby':
-// Baby face filter: smooth skin, brighten, warm tone, slight blur simulation
-for(let i=0;i<p.length;i+=4){
-const r=p[i],g=p[i+1],b=p[i+2];
-// Skin smoothing via neighbor averaging (simplified - just soften)
-const avg=(r+g+b)/3;
-p[i]=Math.min(255,r*.7+avg*.3+18);
-p[i+1]=Math.min(255,g*.7+avg*.3+12);
-p[i+2]=Math.min(255,b*.7+avg*.3+6);
-// Brighten
-p[i]=Math.min(255,p[i]+10);
-p[i+1]=Math.min(255,p[i+1]+8);
-p[i+2]=Math.min(255,p[i+2]+5);
-}
-// Add warm rosy cheeks effect (center area)
-const cx=s/2,cy=s/2,r2=s*.25;
-for(let y=Math.floor(cy-r2);y<cy+r2;y++){
-for(let x=Math.floor(cx-r2);x<cx+r2;x++){
-const dx=x-cx,dy=y-cy,dist=Math.sqrt(dx*dx+dy*dy);
-if(dist<r2){const idx=(y*s+x)*4;const t2=1-(dist/r2);p[idx]=Math.min(255,p[idx]+15*t2);p[idx+1]=Math.min(255,p[idx+1]-5*t2)}
-}
-}
+case'auto':
+// Year-specific auto filter
+applyYearAuto(p,s,selectedYear);
 break;
-case'vintage':for(let i=0;i<p.length;i+=4){const r=p[i],g=p[i+1],b=p[i+2];p[i]=Math.min(255,r*.393+g*.769+b*.189);p[i+1]=Math.min(255,r*.349+g*.686+b*.168);p[i+2]=Math.min(255,r*.272+g*.534+b*.131)}break;
-case'dream':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]*1.05+15);p[i+1]=Math.min(255,p[i+1]*1.02+12);p[i+2]=Math.min(255,p[i+2]*1.0+18)}break;
-case'sketch':for(let i=0;i<p.length;i+=4){p[i]=Math.round(p[i]/48)*48+10;p[i+1]=Math.round(p[i+1]/48)*48+5;p[i+2]=Math.round(p[i+2]/48)*48}break;
+case'bw':grayscaleFilter(p);break;
+case'sepia':sepiaFilter(p,1);break;
+case'vintage70':vintageFilter(p,.85);sepiaFilter(p,.6);addNoise(p,.08);break;
+case'grain':vintageFilter(p,.7);addNoise(p,.15);break;
+case'vintage80':vintageFilter(p,.6);warmFilter(p,.25);softenFilter(p,s,.6);break;
+case'fade':fadeFilter(p,.4);warmFilter(p,.2);break;
+case'polaroid':brightenFilter(p,.15);softenFilter(p,s,.4);vignette(ctx,s,.5);break;
+case'baby80':babyFilter(p,s,1);warmFilter(p,.2);softenFilter(p,s,.5);break;
+case'vivid90':saturateFilter(p,1.3);warmFilter(p,.15);break;
+case'vhs':vhsFilter(p,s);warmFilter(p,.3);softenFilter(p,s,.5);break;
+case'neon':saturateFilter(p,1.5);brightenFilter(p,.1);coolFilter(p,.15);break;
+case'baby90':babyFilter(p,s,1);saturateFilter(p,1.1);softenFilter(p,s,.6);break;
+case'digital00':brightenFilter(p,.15);crispenFilter(p,1.1);warmFilter(p,.1);break;
+case'y2k':saturateFilter(p,1.2);brightenFilter(p,.2);warmFilter(p,.1);break;
+case'webcam':brightenFilter(p,.3);softenFilter(p,s,.8);addNoise(p,.03);break;
+case'baby00':babyFilter(p,s,.8);brightenFilter(p,.1);softenFilter(p,s,.5);break;
+case'insta':warmFilter(p,.2);fadeFilter(p,.2);vignette(ctx,s,.4);break;
+case'hd':crispenFilter(p,1.15);brightenFilter(p,.1);break;
+case'glitch':glitchFilter(p,s);break;
+case'baby10':babyFilter(p,s,.7);brightenFilter(p,.15);softenFilter(p,s,.5);break;
 }
+
 ctx.putImageData(d,0,0);
 ctx.restore();
-// Frame + vignette
-ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=3;ctx.stroke();
-const g=ctx.createRadialGradient(s/2,s/2,s*.35,s/2,s/2,s/2);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.2)');
-ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
-ctx.font='bold 13px -apple-system,"PingFang SC",sans-serif';ctx.fillStyle='rgba(255,255,255,.9)';ctx.textAlign='right';ctx.fillText('童 年 记 忆',s-24,s-20);
+
+// Year-specific frame & decoration
+const yd2=yearData[selectedYear];
+ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);
+switch(selectedYear){
+case'1970':ctx.strokeStyle='rgba(180,170,160,.6)';ctx.lineWidth=4;break;
+case'1980':ctx.strokeStyle='rgba(212,136,92,.5)';ctx.lineWidth=3;break;
+case'1990':ctx.strokeStyle='rgba(196,56,58,.5)';ctx.lineWidth=3;break;
+case'2000':ctx.strokeStyle='rgba(74,144,217,.5)';ctx.lineWidth=3;break;
+case'2010':ctx.strokeStyle='rgba(123,104,238,.5)';ctx.lineWidth=3;break;
+}
+ctx.stroke();
+
+// Vignette
+const vg=ctx.createRadialGradient(s/2,s/2,s*.35,s/2,s/2,s/2);
+vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.15)');
+ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=vg;ctx.fill();
+
+// Year label
+const yrColor=yd2.color;
+ctx.font='bold 12px -apple-system,"PingFang SC",sans-serif';ctx.fillStyle=yrColor;ctx.textAlign='right';ctx.fillText(yd2.label+' · 童年记忆',s-22,s-18);
+
 updateMapAvatar();
 }
-function roundedClip(ctx,s){ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);ctx.clip()}
-function updateMapAvatar(){const c=document.getElementById('resultCanvas'),a=document.getElementById('map-avatar');if(c&&a){a.src=c.toDataURL('image/jpeg',.7);a.classList.add('show')}}
 
-// ===== AI MAGIC =====
-async function requestAI(){
-const st=document.getElementById('aiStatus'),btn=document.getElementById('btnAI');
-st.style.display='block';st.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div>正在上传照片…';
-btn.disabled=true;btn.style.opacity='.6';
-try{
-const c=document.getElementById('resultCanvas'),imgData=c.toDataURL('image/jpeg',.8),taskId='task_'+Date.now()+'_'+Math.random().toString(36).substr(2,6);
-const res=await fetch(AI_BACKEND+'/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:imgData,taskId})});
-const d=await res.json();
-if(!d.success)throw new Error(d.error);
-st.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div>AI正在为你生成童年照…大约需要30秒';
-// Poll for result
-for(let i=0;i<60;i++){
-await new Promise(r=>setTimeout(r,2000));
-const sr=await fetch(AI_BACKEND+'/api/status/'+taskId);
-const sd=await sr.json();
-if(sd.status==='completed'&&sd.resultImage){
-const ni=new Image();ni.onload=function(){uploadedImage=ni;applyFilter('baby',document.querySelector('.filter-chip.active'));st.innerHTML='✅ AI童年照生成成功！看看效果吧～';btn.disabled=false;btn.style.opacity='1';spawnConfetti()};ni.src=sd.resultImage;return}
-st.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div>AI处理中…（'+(i*2+2)+'秒）';
+// ===== FILTER FUNCTIONS =====
+function roundedClip(ctx,s){ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);ctx.clip()}
+
+function applyYearAuto(p,s,year){
+switch(year){
+case'1970':vintageFilter(p,.8);sepiaFilter(p,.7);addNoise(p,.06);break;
+case'1980':vintageFilter(p,.5);warmFilter(p,.3);babyFilter(p,s,.8);softenFilter(p,s,.5);break;
+case'1990':saturateFilter(p,1.2);warmFilter(p,.2);babyFilter(p,s,.9);softenFilter(p,s,.6);break;
+case'2000':brightenFilter(p,.15);saturateFilter(p,1.1);babyFilter(p,s,.7);softenFilter(p,s,.4);break;
+case'2010':brightenFilter(p,.2);crispenFilter(p,1.05);babyFilter(p,s,.6);softenFilter(p,s,.3);break;
 }
-throw new Error('超时，请重试');
-}catch(e){
-st.innerHTML='💡 AI服务暂时繁忙，已为你应用精美婴儿脸滤镜～<br>先探索地图吧，稍后再试！';btn.disabled=false;btn.style.opacity='1'}
 }
+
+function babyFilter(p,s,intensity){
+// Smooth skin + brighten + rosy cheeks
+const i2=Math.max(0,Math.min(1,intensity||1));
+for(let i=0;i<p.length;i+=4){const r=p[i],g=p[i+1],b=p[i+2],avg=(r+g+b)/3;p[i]=Math.min(255,r*(1-i2*.3)+avg*i2*.3+15*i2);p[i+1]=Math.min(255,g*(1-i2*.3)+avg*i2*.3+10*i2);p[i+2]=Math.min(255,b*(1-i2*.3)+avg*i2*.3+6*i2);p[i]=Math.min(255,p[i]+8*i2);p[i+1]=Math.min(255,p[i+1]+6*i2);p[i+2]=Math.min(255,p[i+2]+4*i2)}
+// Rosy cheeks
+const cx=s/2,cy=s/2,r2=s*.22;
+for(let y=Math.floor(cy-r2);y<cy+r2;y++){for(let x=Math.floor(cx-r2);x<cx+r2;x++){const dx=x-cx,dy=y-cy,dist=Math.sqrt(dx*dx+dy*dy);if(dist<r2){const idx=(y*s+x)*4,t=1-dist/r2;p[idx]=Math.min(255,p[idx]+12*i2*t);p[idx+1]=Math.min(255,p[idx+1]-3*i2*t)}}}
+}
+function grayscaleFilter(p){for(let i=0;i<p.length;i+=4){const a=.299*p[i]+.587*p[i+1]+.114*p[i+2];p[i]=a;p[i+1]=a;p[i+2]=a}}
+function sepiaFilter(p,i){for(let j=0;j<p.length;j+=4){const r=p[j],g=p[j+1],b=p[j+2];p[j]=Math.min(255,r*(1-i*.607)+g*i*.769+b*i*.189);p[j+1]=Math.min(255,r*(1-i*.651)+g*i*.686+b*i*.168);p[j+2]=Math.min(255,r*(1-i*.728)+g*i*.534+b*i*.131)}}
+function vintageFilter(p,i){for(let j=0;j<p.length;j+=4){const ii=Math.min(1,i);p[j]=Math.min(255,p[j]*(1-ii)+p[j]*.85*ii+10*ii);p[j+1]=Math.min(255,p[j+1]*(1-ii)+p[j+1]*.78*ii+5*ii);p[j+2]=Math.min(255,p[j+2]*(1-ii)+p[j+2]*.6*ii-2*ii)}}
+function warmFilter(p,i){for(let j=0;j<p.length;j+=4){p[j]=Math.min(255,p[j]+15*i);p[j+1]=Math.min(255,p[j+1]+6*i);p[j+2]=Math.min(255,p[j+2]-4*i)}}
+function coolFilter(p,i){for(let j=0;j<p.length;j+=4){p[j]=Math.min(255,p[j]-4*i);p[j+1]=Math.min(255,p[j+1]+2*i);p[j+2]=Math.min(255,p[j+2]+15*i)}}
+function fadeFilter(p,i){for(let j=0;j<p.length;j+=4){p[j]=Math.min(255,p[j]+(255-p[j])*i);p[j+1]=Math.min(255,p[j+1]+(255-p[j+1])*i);p[j+2]=Math.min(255,p[j+2]+(255-p[j+2])*i)}}
+function brightenFilter(p,i){for(let j=0;j<p.length;j+=4){p[j]=Math.min(255,p[j]+p[j]*i);p[j+1]=Math.min(255,p[j+1]+p[j+1]*i);p[j+2]=Math.min(255,p[j+2]+p[j+2]*i)}}
+function saturateFilter(p,i){for(let j=0;j<p.length;j+=4){const m=(p[j]+p[j+1]+p[j+2])/3;p[j]=Math.min(255,m+(p[j]-m)*i);p[j+1]=Math.min(255,m+(p[j+1]-m)*i);p[j+2]=Math.min(255,m+(p[j+2]-m)*i)}}
+function softenFilter(p,s,i){const w=Math.floor(s),h=Math.floor(s),tmp=new Uint8ClampedArray(p),ii=Math.min(1,i);for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){const idx=(y*w+x)*4;for(let c=0;c<3;c++){let sum=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)sum+=tmp[((y+dy)*w+(x+dx))*4+c];p[idx+c]=Math.round(tmp[idx+c]*(1-ii)+sum/9*ii)}}}}
+function addNoise(p,i){for(let j=0;j<p.length;j+=4){const n=(Math.random()-.5)*255*i;p[j]=Math.max(0,Math.min(255,p[j]+n));p[j+1]=Math.max(0,Math.min(255,p[j+1]+n));p[j+2]=Math.max(0,Math.min(255,p[j+2]+n))}}
+function crispenFilter(p,i){for(let j=0;j<p.length;j+=4){p[j]=Math.min(255,Math.max(0,(p[j]-128)*i+128));p[j+1]=Math.min(255,Math.max(0,(p[j+1]-128)*i+128));p[j+2]=Math.min(255,Math.max(0,(p[j+2]-128)*i+128))}}
+function vignette(ctx,s,i){const g=ctx.createRadialGradient(s/2,s/2,s*.35,s/2,s/2,s/2);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,'+i+')');ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=g;ctx.fill()}
+function vhsFilter(p,s){for(let y=0;y<s;y++){if(Math.random()<.03){const shift=Math.floor((Math.random()-.5)*8);for(let x=0;x<s;x++){const idx=(y*s+Math.max(0,Math.min(s-1,x+shift)))*4;p[y*s*4+x*4]=p[idx];p[y*s*4+x*4+1]=p[idx+1];p[y*s*4+x*4+2]=p[idx+2]}}}}
+function glitchFilter(p,s){for(let j=0;j<15;j++){const y1=Math.floor(Math.random()*s),h=Math.floor(Math.random()*15+3),shift=Math.floor((Math.random()-.5)*20);for(let y=y1;y<Math.min(s,y1+h);y++){const row=y*s*4;const r2=new Uint8ClampedArray(row+Math.abs(shift)*4);if(shift>0){for(let x=s-1;x>=shift;x--){const i1=(y*s+x)*4,i2=(y*s+x-shift)*4;p[i1]=p[i2];p[i1+1]=p[i2+1];p[i1+2]=p[i2+2]}}else{for(let x=0;x<s+shift;x++){const i1=(y*s+x)*4,i2=(y*s+x-shift)*4;p[i1]=p[i2];p[i1+1]=p[i2+1];p[i1+2]=p[i2+2]}}if(Math.random()<.3){const c=Math.random()>.5?0:2;for(let x=0;x<s;x++){const idx=(y*s+x)*4+c;p[idx]=Math.min(255,p[idx]+100)}}}}}
+
+function updateMapAvatar(){const c=document.getElementById('resultCanvas'),a=document.getElementById('map-avatar');if(!c||!a)return;a.src=c.toDataURL('image/jpeg',.7);a.classList.add('show')}
 
 // ===== MAP =====
 function drawMap(){
 const c=document.getElementById('mapCanvas'),w=document.getElementById('mapWrap'),r=w.getBoundingClientRect(),W=r.width||400,H=W*1.25;
 c.width=W*2;c.height=H*2;c.style.width=W+'px';c.style.height=H+'px';
 const ctx=c.getContext('2d');ctx.scale(2,2);
+const mt=yearData[selectedYear].mapTone;
 // Sky+Ground
-const sg=ctx.createLinearGradient(0,0,0,H*.4);sg.addColorStop(0,'#FAF0DC');sg.addColorStop(1,'#F6E3C5');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H*.4);
-const gg=ctx.createLinearGradient(0,H*.4,0,H);gg.addColorStop(0,'#E8D5B0');gg.addColorStop(.5,'#DCC8A0');gg.addColorStop(1,'#C8B590');ctx.fillStyle=gg;ctx.fillRect(0,H*.4,W,H*.6);
+const sg=ctx.createLinearGradient(0,0,0,H*.4);sg.addColorStop(0,mt.sky);sg.addColorStop(1,'#E8D5B0');ctx.fillStyle=sg;ctx.fillRect(0,0,W,H*.4);
+const gg=ctx.createLinearGradient(0,H*.4,0,H);gg.addColorStop(0,mt.ground);gg.addColorStop(.5,'#D0C0A0');gg.addColorStop(1,'#B8A888');ctx.fillStyle=gg;ctx.fillRect(0,H*.4,W,H*.6);
 // Roads
 ctx.strokeStyle='#D4B896';ctx.lineWidth=14;ctx.lineCap='round';ctx.lineJoin='round';
 ctx.beginPath();ctx.moveTo(W*.1,H*.75);ctx.quadraticCurveTo(W*.25,H*.55,W*.45,H*.5);ctx.quadraticCurveTo(W*.65,H*.45,W*.9,H*.35);ctx.stroke();
@@ -400,14 +574,16 @@ ctx.beginPath();ctx.moveTo(W*.45,H*.5);ctx.quadraticCurveTo(W*.5,H*.65,W*.7,H*.7
 ctx.strokeStyle='#E8D5B0';ctx.lineWidth=2;ctx.setLineDash([6,10]);
 ctx.beginPath();ctx.moveTo(W*.1,H*.75);ctx.quadraticCurveTo(W*.25,H*.55,W*.45,H*.5);ctx.quadraticCurveTo(W*.65,H*.45,W*.9,H*.35);ctx.stroke();ctx.setLineDash([]);
 // Buildings
-drawB(ctx,W*.1,H*.12,55,45,'#E8C9A0','🏫');drawB(ctx,W*.62,H*.22,45,38,'#F0D5B0','🏪');drawB(ctx,W*.25,H*.55,50,40,'#EAD5B8','🎠');
+const bc=mt.build;drawB(ctx,W*.1,H*.12,55,45,bc,'🏫');drawB(ctx,W*.62,H*.22,45,38,bc,'🏪');drawB(ctx,W*.25,H*.55,50,40,bc,'🎠');
 drawT(ctx,W*.55,H*.62);drawT(ctx,W*.18,H*.42);drawT(ctx,W*.72,H*.5);
-drawB(ctx,W*.07,H*.62,48,42,'#EDD8C0','🌳');drawB(ctx,W*.38,H*.18,50,44,'#F2DDC5','🏠');drawB(ctx,W*.7,H*.6,40,36,'#E5CEB0','🕹️');drawB(ctx,W*.48,H*.78,45,38,'#D9C5A8','🌊');
+drawB(ctx,W*.07,H*.62,48,42,bc,'🌳');drawB(ctx,W*.38,H*.18,50,44,bc,'🏠');drawB(ctx,W*.7,H*.6,40,36,bc,'🕹️');drawB(ctx,W*.48,H*.78,45,38,bc,'🌊');
 // River
 ctx.strokeStyle='#A8C8E0';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(W*.3,H*.95);ctx.quadraticCurveTo(W*.4,H*.85,W*.55,H*.88);ctx.quadraticCurveTo(W*.7,H*.9,W*.85,H*.85);ctx.stroke();
 // Sun+Clouds
 ctx.fillStyle='#F5D76E';ctx.beginPath();ctx.arc(W*.82,H*.08,22,0,Math.PI*2);ctx.fill();ctx.fillStyle='#F9E88A';ctx.beginPath();ctx.arc(W*.82,H*.08,18,0,Math.PI*2);ctx.fill();
 drawC(ctx,W*.3,H*.08);drawC(ctx,W*.55,H*.04);
+// Year badge on map
+ctx.font='bold 13px -apple-system,"PingFang SC",sans-serif';ctx.fillStyle=yearData[selectedYear].color;ctx.textAlign='left';ctx.fillText(yearData[selectedYear].label+'的童年小镇',14,H-10);
 // Labels
 placeLabels(W,H);
 // Avatar
@@ -419,124 +595,109 @@ function drawB(ctx,x,y,w,h,c,emoji){ctx.fillStyle='rgba(0,0,0,.06)';ctx.fillRect
 function drawT(ctx,x,y){ctx.fillStyle='#8B6914';ctx.fillRect(x-3,y-5,6,16);ctx.fillStyle='#7BA05B';ctx.beginPath();ctx.arc(x,y-6,14,0,Math.PI*2);ctx.fill();ctx.fillStyle='#8DB86A';ctx.beginPath();ctx.arc(x-3,y-9,10,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(x+4,y-8,9,0,Math.PI*2);ctx.fill()}
 function drawC(ctx,x,y){ctx.fillStyle='rgba(255,255,255,.8)';ctx.beginPath();ctx.arc(x,y,16,0,Math.PI*2);ctx.arc(x+18,y-4,14,0,Math.PI*2);ctx.arc(x+32,y,16,0,Math.PI*2);ctx.arc(x+12,y+4,12,0,Math.PI*2);ctx.fill()}
 function placeLabels(W,H){
-const w=document.getElementById('mapWrap'),pos={school:{l:'10%',t:'14%'},grandma:{l:'36%',t:'14%'},shop:{l:'64%',t:'22%'},playground:{l:'22%',t:'52%'},park:{l:'5%',t:'62%'},arcade:{l:'68%',t:'60%'},stream:{l:'46%',t:'78%'}};
-Object.entries(pos).forEach(([k,p])=>{const lb=document.createElement('div');lb.className='map-label'+(visitedLocations.has(k)?' visited':'');lb.textContent=locations[k].emoji+' '+locations[k].name;lb.style.left=p.l;lb.style.top=p.t;lb.addEventListener('click',e=>{e.stopPropagation();openScene(k)});w.appendChild(lb)})
+const w=document.getElementById('mapWrap'),yd=yearData[selectedYear],pos={school:{l:'10%',t:'14%'},grandma:{l:'36%',t:'14%'},shop:{l:'64%',t:'22%'},playground:{l:'22%',t:'52%'},park:{l:'5%',t:'62%'},arcade:{l:'68%',t:'60%'},stream:{l:'46%',t:'78%'}};
+Object.entries(pos).forEach(([k,p])=>{
+const loc=getLocationData(k);
+const lb=document.createElement('div');lb.className='map-label'+(visitedLocations.has(k)?' visited':'');lb.textContent=loc.emoji+' '+loc.name;lb.style.left=p.l;lb.style.top=p.t;lb.addEventListener('click',e=>{e.stopPropagation();openScene(k)});w.appendChild(lb)})
+}
+
+function getLocationData(key){
+const base=baseLocations[key];
+const override=yearData[selectedYear].locationOverrides[key];
+if(override)return {...base,...override};
+return base;
 }
 
 // ===== IMMERSIVE SCENES =====
-let currentLoc=null;
+let currentLoc=null,sceneIntervals=[];
+function clearIntervals(){sceneIntervals.forEach(clearInterval);sceneIntervals=[]}
+
 function openScene(locKey){
-currentLoc=locKey;const loc=locations[locKey];
+currentLoc=locKey;const loc=getLocationData(locKey);
+const yd=yearData[selectedYear];
+const desc=loc.descs[selectedYear]||loc.descs['1990'];
 document.getElementById('sceneBg').className='scene-bg '+loc.bg;
 document.getElementById('sceneEmoji').textContent=loc.emoji;
 document.getElementById('sceneTitle').textContent=loc.name;
-document.getElementById('sceneDesc').textContent=loc.desc;
+document.getElementById('sceneDesc').textContent=desc.main;
+document.getElementById('sceneEraNote').textContent='📅 '+yd.label+' · '+desc.note;
 document.getElementById('sceneStamp').className='scene-stamp';
 document.getElementById('sceneStamp').textContent='📮';
 document.getElementById('sceneCollectBtn').textContent=visitedLocations.has(locKey)?'✅ 已收藏 · 再次回忆':'💝 收藏这份回忆';
 document.getElementById('sceneCollectBtn').disabled=false;
 
-// Build interactive elements based on location
-const inter=document.getElementById('sceneInteract');
-inter.innerHTML='';
+const inter=document.getElementById('sceneInteract');inter.innerHTML='';
 switch(locKey){
-case'school':buildSchool(inter);break;
-case'shop':buildShop(inter);break;
-case'playground':buildPlayground(inter);break;
-case'arcade':buildArcade(inter);break;
-case'stream':buildStream(inter);break;
-case'park':buildPark(inter);break;
+case'school':buildSchool(inter);break;case'shop':buildShop(inter);break;
+case'playground':buildPlayground(inter);break;case'arcade':buildArcade(inter);break;
+case'stream':buildStream(inter);break;case'park':buildPark(inter);break;
 case'grandma':buildGrandma(inter);break;
 }
-
-document.getElementById('sceneOverlay').classList.add('show');
-document.body.style.overflow='hidden';
+document.getElementById('sceneOverlay').classList.add('show');document.body.style.overflow='hidden';
 }
+
 function closeScene(){document.getElementById('sceneOverlay').classList.remove('show');document.body.style.overflow='';clearIntervals()}
 function collectAndClose(){
-if(currentLoc&&!visitedLocations.has(currentLoc)){
-visitedLocations.add(currentLoc);
-collectSticker(currentLoc);
-document.getElementById('sceneStamp').className='scene-stamp show';
-document.getElementById('sceneCollectBtn').textContent='✅ 已收藏！';
-document.getElementById('sceneCollectBtn').disabled=true;
-spawnConfetti();
-setTimeout(()=>{closeScene();checkAllCollected()},1200);
-}else{closeScene()}
+if(currentLoc&&!visitedLocations.has(currentLoc)){visitedLocations.add(currentLoc);collectSticker(currentLoc);document.getElementById('sceneStamp').className='scene-stamp show';document.getElementById('sceneCollectBtn').textContent='✅ 已收藏！';document.getElementById('sceneCollectBtn').disabled=true;spawnConfetti();setTimeout(()=>{closeScene();checkAllCollected()},1200)}else{closeScene()}
 }
 
-// Interactive scenes
-let sceneIntervals=[];
-function clearIntervals(){sceneIntervals.forEach(clearInterval);sceneIntervals=[]}
-
-function buildSchool(el){
-el.innerHTML='<div class="chalkboard" id="chalkboard" onclick="this.classList.toggle(\'erased\')"></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 点击黑板擦一擦</div>';
-}
-
+function buildSchool(el){el.innerHTML='<div class="chalkboard" id="chalkboard" onclick="this.classList.toggle(\'erased\')"></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 点击黑板擦一擦</div>'}
 function buildShop(el){
-const items=[{e:'🍬',n:'大白兔',p:'1毛'},{e:'🍭',n:'棒棒糖',p:'2毛'},{e:'🌶️',n:'辣条',p:'5毛'},{e:'🧃',n:'冰袋',p:'2毛'},{e:'🍫',n:'麦丽素',p:'3毛'},{e:'🍪',n:'动物饼干',p:'1毛'}];
-el.innerHTML='<div style="font-size:13px;color:var(--pri);text-align:center;margin-bottom:8px;font-weight:600">🛒 你有5毛零花钱，点击选购：</div><div class="shop-shelf">'+items.map(i=>'<div class="shop-item" onclick="pickCandy(this)" data-name="'+i.n+'"><span>'+i.e+'</span><span class="tag">'+i.p+'</span></div>').join('')+'</div><div id="shopMsg" style="text-align:center;font-size:14px;color:var(--bn);margin-top:8px;font-weight:600"></div>';
+const yd=yearData[selectedYear];let items;
+switch(selectedYear){
+case'1970':items=[{e:'🍬',n:'水果糖',p:'1分'},{e:'🥜',n:'花生糖',p:'2分'},{e:'🍯',n:'麦芽糖',p:'3分'},{e:'🍪',n:'动物饼干',p:'5分'}];break;
+case'1980':items=[{e:'🍬',n:'大白兔',p:'1毛'},{e:'🌶️',n:'辣条',p:'5毛'},{e:'🍭',n:'棒棒糖',p:'2毛'},{e:'🧃',n:'冰袋',p:'2毛'}];break;
+case'1990':items=[{e:'🍭',n:'奇多圈',p:'5毛'},{e:'🃏',n:'水浒卡',p:'1块'},{e:'🍧',n:'绿舌头',p:'1块'},{e:'🫧',n:'泡泡胶',p:'5毛'}];break;
+case'2000':items=[{e:'🍟',n:'咪咪虾条',p:'5毛'},{e:'🍫',n:'麦丽素',p:'3块'},{e:'🍦',n:'可爱多',p:'4块'},{e:'🍪',n:'奥利奥',p:'6块'}];break;
+case'2010':items=[{e:'🧋',n:'奶茶',p:'15块'},{e:'🍩',n:'甜甜圈',p:'8块'},{e:'🍪',n:'曲奇',p:'10块'},{e:'🍫',n:'费列罗',p:'20块'}];break;
 }
-function pickCandy(el){
-if(el.classList.contains('picked'))return;
-document.querySelectorAll('.shop-item').forEach(i=>i.classList.remove('picked'));
-el.classList.add('picked');
-const msgs=['哇！还是小时候的味道！😋','好甜～和记忆里一模一样 🍬','小时候最爱的就是它了！','每次放学都要买一包 🥹'];
-document.getElementById('shopMsg').textContent=el.dataset.name+'：'+msgs[Math.floor(Math.random()*msgs.length)];
+el.innerHTML='<div style="font-size:13px;color:var(--pri);text-align:center;margin-bottom:8px;font-weight:600">🛒 兜里有零花钱，点击选购：</div><div class="shop-shelf">'+items.map(i=>'<div class="shop-item" onclick="pickCandy(this)" data-name="'+i.n+'"><span>'+i.e+'</span><span class="tag">'+i.p+'</span></div>').join('')+'</div><div id="shopMsg" style="text-align:center;font-size:14px;color:var(--bn);margin-top:8px;font-weight:600;min-height:20px"></div>';
 }
+function pickCandy(el){if(el.classList.contains('picked'))return;document.querySelectorAll('.shop-item').forEach(i=>i.classList.remove('picked'));el.classList.add('picked');const msgs=['哇！还是小时候的味道！😋','好怀念～和记忆里一模一样','小时候最爱的就是它了！','这个味道永远不会忘 🥹'];document.getElementById('shopMsg').textContent=el.dataset.name+'：'+msgs[Math.floor(Math.random()*msgs.length)]}
 
-function buildPlayground(el){
-el.innerHTML='<div class="play-swing" id="playSwing" onclick="this.classList.toggle(\'swinging\')"><div class="play-swing-rope"></div><div class="play-swing-seat"></div></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 点击秋千荡起来</div>';
-}
+function buildPlayground(el){el.innerHTML='<div class="play-swing" id="playSwing" onclick="this.classList.toggle(\'swinging\')"><div class="play-swing-rope"></div><div class="play-swing-seat"></div></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 点击秋千荡起来</div>'}
 
 function buildArcade(el){
-el.innerHTML='<div class="arcade-game" id="arcadeGame"><div class="arcade-score">🎯 <span id="arcadeScore">0</span> 分</div><div style="color:#fff;text-align:center;font-size:14px;margin-top:8px">快打地鼠！点击冒出来的地鼠 🐹</div></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 30秒倒计时，看你能打多少！</div>';
+const loc=getLocationData('arcade'),desc=loc.descs[selectedYear]||loc.descs['1990'];
+if(selectedYear==='1970'){
+el.innerHTML='<div style="text-align:center;font-size:48px;padding:20px">🪙🎯🔮</div><div style="text-align:center;font-size:13px;color:#999">那个年代没有游戏机，弹珠和画片就是整个世界</div>';
+}else if(selectedYear>='2000'){
+el.innerHTML='<div style="text-align:center;font-size:48px;padding:20px">💻🎮📱</div><div style="text-align:center;font-size:13px;color:#999">'+loc.name+'里藏着那个年代的秘密</div>';
+}else{
+el.innerHTML='<div class="arcade-game" id="arcadeGame"><div class="arcade-score">🎯 <span id="arcadeScore">0</span> 分</div><div style="color:#fff;text-align:center;font-size:14px;margin-top:8px">快打地鼠！点击冒出来的地鼠 🐹</div></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 30秒倒计时</div>';
 setTimeout(()=>startArcade(),500);
 }
-function startArcade(){
-const g=document.getElementById('arcadeGame'),holes=[],score={v:0};
-// Create holes
-for(let i=0;i<6;i++){const h=document.createElement('div');h.className='arcade-hole';h.style.left=(10+i*50)+'px';h.style.top='80px';h.onclick=function(){score.v++;document.getElementById('arcadeScore').textContent=score.v;this.style.transform='scale(.7)';setTimeout(()=>this.style.transform='',100)};g.appendChild(h);holes.push(h)}
-// Spawn moles
-const mole=document.createElement('div');mole.className='arcade-mole';mole.textContent='🐹';g.appendChild(mole);
-const spawn=setInterval(()=>{const h=holes[Math.floor(Math.random()*holes.length)];mole.style.left=h.style.left;mole.style.top='60px';mole.style.display='flex';setTimeout(()=>mole.style.display='none',800+Math.random()*400)},1000);
-sceneIntervals.push(spawn);
-setTimeout(()=>{clearInterval(spawn);mole.style.display='none';document.getElementById('sceneDesc').textContent='游戏结束！你打了 '+score.v+' 只地鼠！🎉'},30000);
 }
+function startArcade(){const g=document.getElementById('arcadeGame'),holes=[],score={v:0};for(let i=0;i<6;i++){const h=document.createElement('div');h.className='arcade-hole';h.style.left=(10+i*50)+'px';h.style.top='80px';h.onclick=function(){score.v++;document.getElementById('arcadeScore').textContent=score.v;this.style.transform='scale(.7)';setTimeout(()=>this.style.transform='',100)};g.appendChild(h);holes.push(h)}const mole=document.createElement('div');mole.className='arcade-mole';mole.textContent='🐹';g.appendChild(mole);const spawn=setInterval(()=>{const h=holes[Math.floor(Math.random()*holes.length)];mole.style.left=h.style.left;mole.style.top='60px';mole.style.display='flex';setTimeout(()=>mole.style.display='none',800+Math.random()*400)},1000);sceneIntervals.push(spawn);setTimeout(()=>{clearInterval(spawn);mole.style.display='none';document.getElementById('sceneDesc').textContent='游戏结束！你打了 '+score.v+' 只地鼠！🎉'},30000)}
 
 function buildStream(el){
 el.innerHTML='<div style="position:relative;width:100%;height:100px;background:linear-gradient(180deg,#B8D8F0 60%,#90C0D8 100%);border-radius:60px;overflow:hidden;margin-top:10px" id="streamArea"><div style="position:absolute;bottom:10px;width:100%;text-align:center;font-size:20px;color:rgba(0,0,0,.1)">～ ～ ～ ～ ～</div><div class="stream-stone" id="streamStone" style="left:20px;top:35px"></div></div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 拖动石头打水漂！向右划出去～</div><div id="rippleCount" style="text-align:center;font-size:16px;font-weight:700;color:var(--pri);margin-top:4px"></div>';
-setTimeout(()=>{
-const stone=document.getElementById('streamStone'),area=document.getElementById('streamArea');
-let startX=0,dragging=false;
-stone.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragging=true;e.preventDefault()});
-stone.addEventListener('touchmove',e=>{if(!dragging)return;const dx=e.touches[0].clientX-startX;stone.style.left=Math.max(5,Math.min(area.offsetWidth-35,20+dx))+'px';e.preventDefault()});
-stone.addEventListener('touchend',e=>{dragging=false;const finalX=parseInt(stone.style.left);if(finalX>area.offsetWidth*.6){const ripples=Math.floor(Math.random()*5)+3;document.getElementById('rippleCount').textContent='💦 '+ripples+' 个水漂！厉害！';for(let i=0;i<ripples;i++){const rp=document.createElement('div');rp.className='stream-ripple';rp.style.left=(finalX+i*30)+'px';rp.style.top='50px';rp.style.animationDelay=i*.3+'s';area.appendChild(rp);setTimeout(()=>rp.remove(),1500)}setTimeout(()=>stone.style.left='20px',800)}else{stone.style.left='20px';document.getElementById('rippleCount').textContent='再试一次，用力划出去！💪'}});
-},300);
+setTimeout(()=>{const stone=document.getElementById('streamStone'),area=document.getElementById('streamArea');let startX=0;stone.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;e.preventDefault()},{passive:false});stone.addEventListener('touchmove',e=>{const dx=e.touches[0].clientX-startX;stone.style.left=Math.max(5,Math.min(area.offsetWidth-35,20+dx))+'px';e.preventDefault()},{passive:false});stone.addEventListener('touchend',()=>{const finalX=parseInt(stone.style.left);if(finalX>area.offsetWidth*.6){const ripples=Math.floor(Math.random()*5)+3;document.getElementById('rippleCount').textContent='💦 '+ripples+' 个水漂！厉害！';for(let i=0;i<ripples;i++){const rp=document.createElement('div');rp.className='stream-ripple';rp.style.left=(finalX+i*30)+'px';rp.style.top='50px';rp.style.animationDelay=i*.3+'s';area.appendChild(rp);setTimeout(()=>rp.remove(),1500)}setTimeout(()=>stone.style.left='20px',800)}else{stone.style.left='20px';document.getElementById('rippleCount').textContent='再试一次，用力划出去！💪'}})},300);
 }
 
-function buildPark(el){
-const leaves=['🍂','🍃','🌿','🍁','🦋','🌸'];el.innerHTML='<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:36px" id="parkItems">'+leaves.map(l=>'<span style="cursor:pointer;transition:all .3s" onclick="const t=this;t.style.transform=\'scale(1.5) rotate(20deg)\';setTimeout(()=>t.style.transform=\'\',500);spawnMiniConfetti(event)">'+l+'</span>').join('')+'</div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 点点看，收集公园里的小惊喜</div>';
-}
+function buildPark(el){const leaves=['🍂','🍃','🌿','🍁','🦋','🌸'];el.innerHTML='<div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:36px" id="parkItems">'+leaves.map(l=>'<span style="cursor:pointer;transition:all .3s" onclick="const t=this;t.style.transform=\'scale(1.5) rotate(20deg)\';setTimeout(()=>t.style.transform=\'\',500);spawnMiniConfetti(event)">'+l+'</span>').join('')+'</div><div style="text-align:center;margin-top:8px;font-size:12px;color:#999">👆 收集公园里的小惊喜</div>'}
 
 function buildGrandma(el){
-el.innerHTML='<div style="text-align:center"><div style="font-size:48px;animation:bounce 1.5s infinite;display:inline-block">🥟</div><div style="font-size:48px;animation:bounce 1.5s .3s infinite;display:inline-block">🍲</div><div style="font-size:48px;animation:bounce 1.5s .6s infinite;display:inline-block">🍜</div></div><div style="text-align:center;margin-top:12px"><button class="btn btn-outline btn-sm" onclick="const msgs=[\'外婆说：多吃点，看你瘦的 🥰\',\'外婆往你口袋里塞了一把大白兔奶糖 🍬\',\'外婆的手很暖，摸了摸你的头 ✨\',\'外婆站在门口，一直目送你走远 👋\'];document.getElementById(\'grandmaMsg\').textContent=msgs[Math.floor(Math.random()*msgs.length)]">💬 跟外婆说说话</button><div id="grandmaMsg" style="margin-top:8px;font-size:15px;color:var(--bn);font-weight:600;min-height:24px"></div></div>';
+const yd=yearData[selectedYear];
+el.innerHTML='<div style="text-align:center"><div style="font-size:42px;animation:bounce 1.5s infinite;display:inline-block">🥟</div><div style="font-size:42px;animation:bounce 1.5s .3s infinite;display:inline-block">🍲</div><div style="font-size:42px;animation:bounce 1.5s .6s infinite;display:inline-block">🍜</div></div><div style="text-align:center;margin-top:12px"><button class="btn btn-outline btn-sm" onclick="const msgs=[\'外婆说：多吃点，看你瘦的 🥰\',\'外婆往你口袋里塞了一把糖 🍬\',\'外婆的手很暖，摸了摸你的头 ✨\',\'外婆站在门口，一直目送你走远 👋\',\'外婆问：下次什么时候回来呀？🥺\'];document.getElementById(\'grandmaMsg\').textContent=msgs[Math.floor(Math.random()*msgs.length)]">💬 跟外婆说说话</button><div id="grandmaMsg" style="margin-top:8px;font-size:15px;color:var(--bn);font-weight:600;min-height:24px"></div></div>';
 }
 
 // ===== STICKERS =====
-function collectSticker(locKey){const s=document.querySelector('.sticker-slot[data-loc="'+locKey+'"]');if(s){s.classList.add('collected');const e={school:'🏫',shop:'🏪',playground:'🎠',park:'🌳',grandma:'🏠',arcade:'🕹️',stream:'🌊'};s.textContent=e[locKey]||'⭐';document.getElementById('stickerCount').textContent=visitedLocations.size;s.style.transform='scale(1.3)';setTimeout(()=>s.style.transform='',300)}
-// update map labels
-const w=document.getElementById('mapWrap');w.querySelectorAll('.map-label').forEach(l=>l.remove());drawMap()}
-function checkAllCollected(){if(visitedLocations.size>=7){document.getElementById('totalMinutes').textContent=Math.floor((Date.now()-startTime)/60000)||1;document.getElementById('shareCard').classList.add('show');spawnConfetti()}}
+function collectSticker(locKey){const s=document.querySelector('.sticker-slot[data-loc="'+locKey+'"]');if(s){s.classList.add('collected');const e={school:'🏫',shop:'🏪',playground:'🎠',park:'🌳',grandma:'🏠',arcade:'🕹️',stream:'🌊'};s.textContent=e[locKey]||'⭐';document.getElementById('stickerCount').textContent=visitedLocations.size;s.style.transform='scale(1.3)';setTimeout(()=>s.style.transform='',300)}const w=document.getElementById('mapWrap');w.querySelectorAll('.map-label').forEach(l=>l.remove());drawMap()}
+function checkAllCollected(){if(visitedLocations.size>=7){document.getElementById('totalMinutes').textContent=Math.floor((Date.now()-startTime)/60000)||1;document.getElementById('shareStickers').textContent='7';document.getElementById('shareCard').classList.add('show');spawnConfetti()}}
 
 // ===== EFFECTS =====
 function spawnConfetti(){const c=document.createElement('div');c.className='confetti';document.body.appendChild(c);const e=['🎉','🎊','⭐','✨','💫','🌸','🎈','🍭','🎀','💝'];for(let i=0;i<40;i++){const p=document.createElement('span');p.className='confetti-piece';p.textContent=e[Math.floor(Math.random()*e.length)];p.style.left=Math.random()*100+'%';p.style.top=-(Math.random()*40)+'px';p.style.fontSize=(16+Math.random()*24)+'px';p.style.animationDuration=(2+Math.random()*3)+'s';p.style.animationDelay=Math.random()*1.5+'s';c.appendChild(p)}setTimeout(()=>c.remove(),5000)}
 function spawnMiniConfetti(e){const c=document.createElement('div');c.className='confetti';document.body.appendChild(c);const ms=['✨','💫','⭐','🌟'];for(let i=0;i<8;i++){const p=document.createElement('span');p.className='confetti-piece';p.textContent=ms[i%ms.length];p.style.left=(e.clientX+Math.random()*40-20)+'px';p.style.top=(e.clientY+Math.random()*20-10)+'px';p.style.fontSize=(10+Math.random()*14)+'px';p.style.animationDuration=(1+Math.random()*1.5)+'s';c.appendChild(p)}setTimeout(()=>c.remove(),2000)}
 
 // ===== SHARE =====
-function shareResult(){if(navigator.share){navigator.share({title:'童年时光机 · 六一快乐',text:'我在"回到童年"里走遍了7个童年角落，你也来试试吧！🧒✨',url:window.location.href}).catch(()=>{})}else{navigator.clipboard.writeText(window.location.href).then(()=>alert('链接已复制！')).catch(()=>{})}}
+function shareResult(){
+const yd=yearData[selectedYear];
+const text='我在「童年时光机」回到了'+yd.label+'，走遍了7个童年角落！你也来试试吧！🧒✨';
+if(navigator.share){navigator.share({title:'童年时光机 · '+yd.label+'回忆',text,url:window.location.href}).catch(()=>{})}else{navigator.clipboard.writeText(window.location.href+'\n'+text).then(()=>alert('链接已复制！')).catch(()=>{})}
+}
 
-// Init
+// ===== INIT =====
 window.addEventListener('DOMContentLoaded',init);
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const m=document.getElementById('screen-map');if(m.classList.contains('active')){const w=document.getElementById('mapWrap');w.querySelectorAll('.map-label').forEach(l=>l.remove());drawMap()}},300)});
 </script>

@@ -1,0 +1,7 @@
+name = "childhood-memory"
+main = "_worker.js"
+compatibility_date = "2026-05-01"
+
+# 部署前先设置 HuggingFace Token:
+#   wrangler secret put HF_TOKEN
+# 在 https://huggingface.co/settings/tokens 创建免费 token

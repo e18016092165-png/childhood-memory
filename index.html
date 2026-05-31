@@ -361,6 +361,103 @@ quizAnswers:[], quizDone:false, musicOn:false, gameStart:0
 };
 const LS=window.localStorage;
 
+// ==================== AI WORKER CONFIG ====================
+// 部署 Cloudflare Worker 后，把 URL 填到这里
+// 不填则走纯前端回退（Canvas 像素处理）
+const WORKER_URL = 'https://childhood-memory.e18016092165.workers.dev';
+// 是否尝试 AI Worker 处理（首次加载模型约 60s）
+const TRY_WORKER = !!WORKER_URL;
+
+async function processWithWorker() {
+  const c = document.getElementById('rc');
+  const ol = document.getElementById('pol');
+  const fill = document.getElementById('pfill');
+  const txt = document.getElementById('ptext');
+
+  ol.classList.add('on');
+  fill.style.width = '0%';
+  txt.textContent = '🚀 AI 童年魔法正在准备…';
+  fill.style.width = '10%';
+
+  try {
+    // 先绘制原始图片到 canvas
+    const s = 500;
+    c.width = s; c.height = s;
+    const ctx = c.getContext('2d');
+    const img = S.img;
+    const src = Math.min(img.width, img.height);
+    const sx = (img.width - src) / 2;
+    const sy = (img.height - src) / 2;
+    ctx.clearRect(0, 0, s, s);
+    ctx.drawImage(img, sx, sy, src, src, 0, 0, s, s);
+
+    const dataUrl = c.toDataURL('image/jpeg', 0.9);
+    txt.textContent = '🧠 AI 正在生成童年照…';
+    fill.style.width = '25%';
+
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: dataUrl, era: S.year }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (err.error === 'model_loading') {
+        txt.textContent = '⏳ AI 模型加载中（首次约 60s），请等待…';
+        // 轮询等待模型加载
+        for (let i = 0; i < 20; i++) {
+          fill.style.width = Math.min(90, 25 + i * 3) + '%';
+          await new Promise(r => setTimeout(r, 3000));
+          const retry = await fetch(WORKER_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: dataUrl, era: S.year }),
+          });
+          if (retry.ok) {
+            const blob = await retry.blob();
+            const imgObj = new Image();
+            await new Promise((resolve, reject) => {
+              imgObj.onload = resolve;
+              imgObj.onerror = reject;
+              imgObj.src = URL.createObjectURL(blob);
+            });
+            ctx.clearRect(0, 0, s, s);
+            ctx.drawImage(imgObj, 0, 0, s, s);
+            S.faceOk = true;
+            fill.style.width = '100%';
+            txt.textContent = '✅ AI 童年照生成完成！';
+            setTimeout(() => { ol.classList.remove('on'); sfxGreat(); unlockAchievement('firstPhoto'); updateResultUI(); }, 500);
+            return true;
+          }
+        }
+        return false; // 超时，降级
+      }
+      return false;
+    }
+
+    // 成功
+    const blob = await res.blob();
+    const imgObj = new Image();
+    await new Promise((resolve, reject) => {
+      imgObj.onload = resolve;
+      imgObj.onerror = reject;
+      imgObj.src = URL.createObjectURL(blob);
+    });
+    ctx.clearRect(0, 0, s, s);
+    ctx.drawImage(imgObj, 0, 0, s, s);
+    S.faceOk = true;
+    fill.style.width = '100%';
+    txt.textContent = '✅ AI 童年照生成完成！';
+    setTimeout(() => { ol.classList.remove('on'); sfxGreat(); unlockAchievement('firstPhoto'); updateResultUI(); }, 500);
+    return true;
+
+  } catch (e) {
+    console.warn('Worker error, falling back:', e);
+    return false;
+  }
+}
+
 // ==================== AUDIO SYSTEM ====================
 let actx,mgain,mosc=[];
 function initAudio(){
@@ -581,6 +678,16 @@ setTimeout(()=>processWithFace(),200);
 
 async function processWithFace(){
 const ol=document.getElementById('pol'),fill=document.getElementById('pfill'),txt=document.getElementById('ptext');
+
+// 1) 如果有 Worker，优先走 AI 处理
+if (TRY_WORKER) {
+  const ok = await processWithWorker();
+  if (ok) return;
+  // 降级：继续走本地处理
+  console.log('Worker failed, using local processing');
+}
+
+// 2) 本地 fallback: Face API 检测
 ol.classList.add('on');fill.style.width='0%';txt.textContent='🔍 分析面部特征…';
 fill.style.width='25%';
 
@@ -588,15 +695,22 @@ try{
 if(typeof faceapi==='undefined'){
 const script=document.createElement('script');
 await new Promise((resolve,reject)=>{
-script.src='https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js';
+script.src='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@0.22.2/dist/face-api.min.js';
 script.onload=resolve;script.onerror=reject;document.head.appendChild(script)});
-await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
-await faceapi.nets.faceLandmark68TinyNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+// 使用 @vladmandic/face-api 的正确模型路径
+const MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@0.22.2/model/';
+await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL); // 用 68 点替代 Tiny 68
 }
 fill.style.width='55%';txt.textContent='👁️ 检测面部特征点…';
 const dets=await faceapi.detectAllFaces(S.img,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks(true);
-if(dets.length>0){S.faceOk=true;fill.style.width='80%';txt.textContent='✨ 生成童年模样…';applyChildhoodFace(dets[0].landmarks)}else{S.faceOk=false;fill.style.width='100%';txt.textContent='使用智能童年滤镜…';setTimeout(()=>{applyFilter('c'+S.year.slice(2,4),null);ol.classList.remove('on')},400);return}
-}catch(e){S.faceOk=false;fill.style.width='100%';txt.textContent='✨ 智能童年滤镜处理中…';setTimeout(()=>{applyFilter('c'+S.year.slice(2,4),null);ol.classList.remove('on')},300);return}
+if(dets.length>0){S.faceOk=true;fill.style.width='80%';txt.textContent='✨ 生成童年模样…';applyChildhoodFace(dets[0].landmarks)}else{throw new Error('No face detected')}
+}catch(e){
+console.warn('Face API fallback failed:', e);
+S.faceOk=false;fill.style.width='100%';txt.textContent='✨ 智能童年滤镜处理中…';
+setTimeout(()=>{applyFilter('c'+S.year.slice(2,4),null);ol.classList.remove('on')},300);
+return
+}
 
 fill.style.width='100%';txt.textContent='✅ 童年照生成完成！';
 setTimeout(()=>{ol.classList.remove('on');sfxGreat();unlockAchievement('firstPhoto');updateResultUI()},500);

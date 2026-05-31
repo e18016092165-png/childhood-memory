@@ -413,7 +413,7 @@ async function processWithWorker() {
 
     // 15 秒超时，避免卡死
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
+    const timer = setTimeout(() => controller.abort(), 8000);
 
     const res = await fetch(WORKER_URL, {
       method: 'POST',
@@ -427,8 +427,8 @@ async function processWithWorker() {
       const err = await res.json().catch(() => ({}));
       if (err.error === 'model_loading') {
         txt.textContent = '⏳ 模型冷却中…';
-        for (let i = 0; i < 12; i++) {
-          fill.style.width = Math.min(90, 25 + i * 5) + '%';
+        for (let i = 0; i < 8; i++) {
+          fill.style.width = Math.min(90, 25 + i * 8) + '%';
           await new Promise(r => setTimeout(r, 3000));
           const retry = await fetch(WORKER_URL, {
             method: 'POST',
@@ -483,6 +483,8 @@ async function processWithWorker() {
 let actx,mgain,mosc=[];
 function initAudio(){
 if(!actx){try{actx=new(window.AudioContext||window.webkitAudioContext)}catch(e){return}}
+// 唤醒被浏览器暂停的 AudioContext
+if(actx.state==='suspended'){actx.resume().catch(()=>{})}
 if(mgain)return;
 mgain=actx.createGain();mgain.gain.value=0;mgain.connect(actx.destination);
 }
@@ -774,8 +776,7 @@ const ol=document.getElementById('pol'),fill=document.getElementById('pfill'),tx
 if (TRY_WORKER) {
   const ok = await processWithWorker();
   if (ok) return;
-  // 降级：继续走本地处理
-  console.log('Worker failed, using local processing');
+  txt.textContent = '📡 AI 服务不可用，用本地处理…';
 }
 
 // 2) 本地 fallback: Face API 检测
@@ -798,8 +799,8 @@ const dets=await faceapi.detectAllFaces(S.img,new faceapi.TinyFaceDetectorOption
 if(dets.length>0){S.faceOk=true;fill.style.width='80%';txt.textContent='✨ 生成童年模样…';applyChildhoodFace(dets[0].landmarks)}else{throw new Error('No face detected')}
 }catch(e){
 console.warn('Face API fallback failed:', e);
-S.faceOk=false;fill.style.width='100%';txt.textContent='✨ 智能童年滤镜处理中…';
-setTimeout(()=>{applyFilter('c'+S.year.slice(2,4),null);ol.classList.remove('on')},300);
+S.faceOk=false;fill.style.width='100%';txt.textContent='🎨 童年风格滤镜效果…';
+setTimeout(()=>{applyFilter('c'+S.year.slice(2,4),null);ol.classList.remove('on');document.getElementById('rTitle').textContent='✨ 童年风格滤镜'},300);
 return
 }
 
@@ -882,11 +883,26 @@ for(let y=y0;y<y1;y++){for(let x=x0;x<x1;x++){let sr=0,sg=0,sb=0,count=0;for(let
 }
 
 function yearPost(ctx,s){
-const vg=ctx.createRadialGradient(s/2,s/2,s*.35,s/2,s/2,s/2);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.1)');
+// 暗角（更明显）
+const vg=ctx.createRadialGradient(s/2,s/2,s*.25,s/2,s/2,s/2);
+vg.addColorStop(0,'rgba(0,0,0,0)');
+vg.addColorStop(1,'rgba(0,0,0,.2)');
 ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=vg;ctx.fill();
-ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);
-const lw={'1970':[4,'rgba(160,150,140,.5)'],'1980':[3,'rgba(212,136,92,.4)'],'1990':[3,'rgba(196,56,58,.4)'],'2000':[3,'rgba(74,144,217,.4)'],'2010':[3,'rgba(123,104,238,.4)']};
-ctx.strokeStyle=lw[S.year][1];ctx.lineWidth=lw[S.year][0];ctx.stroke();
+
+// 柔光光晕（提亮中心）
+const g=ctx.createRadialGradient(s/2,s/2-s*.05,5,s/2,s/2-s*.05,s*.35);
+g.addColorStop(0,'rgba(255,255,230,.15)');
+g.addColorStop(1,'rgba(255,255,230,0)');
+ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+// 年代色边框（粗一圈）
+ctx.beginPath();ctx.arc(s/2,s/2,s/2-6,0,Math.PI*2);
+const cols={'1970':'rgba(160,150,140,.7)','1980':'rgba(212,136,92,.6)','1990':'rgba(196,56,58,.6)','2000':'rgba(74,144,217,.6)','2010':'rgba(123,104,238,.6)'};
+ctx.strokeStyle=cols[S.year];ctx.lineWidth=4;ctx.stroke();
+
+// 双线装饰边框
+ctx.beginPath();ctx.arc(s/2,s/2,s/2-12,0,Math.PI*2);
+ctx.strokeStyle='rgba(255,255,255,.15)';ctx.lineWidth=1;ctx.stroke();
 }
 
 function rclip(ctx,s){ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);ctx.clip()}
@@ -951,8 +967,15 @@ updateMapAvatar();
 if(filterUsed.size>=4)unlockAchievement('allFilters');
 }
 
-function babyF(p,s){const cx=s/2,cy=s/2,r2=s*.25;for(let y=Math.floor(cy-r2);y<cy+r2;y++){for(let x=Math.floor(cx-r2);x<cx+r2;x++){const dx=x-cx,dy=y-cy,dist=Math.sqrt(dx*dx+dy*dy);if(dist<r2){const idx=(y*s+x)*4,t=1-dist/r2;p[idx]=Math.min(255,p[idx]*(.7+.3*t)+12*t);p[idx+1]=Math.min(255,p[idx+1]*(.7+.3*t)+8*t);p[idx+2]=Math.min(255,p[idx+2]*(.7+.3*t)+4*t);if(Math.abs(x-cx)<s*.2&&Math.abs(y-cy-s*.05)<s*.1){p[idx]=Math.min(255,p[idx]+15*t);p[idx+1]=Math.min(255,p[idx+1]-5*t)}}}}}
-function eraColor(p,era){switch(era){case'70':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]*.78+15);p[i+1]=Math.min(255,p[i+1]*.72+10);p[i+2]=Math.min(255,p[i+2]*.55+5)}break;case'80':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]+10);p[i+1]=Math.min(255,p[i+1]+4);p[i+2]=Math.min(255,p[i+2]-2)}break;case'90':for(let i=0;i<p.length;i+=4){const m=(p[i]+p[i+1]+p[i+2])/3;p[i]=Math.min(255,m+(p[i]-m)*1.15);p[i+1]=Math.min(255,m+(p[i+1]-m)*1.15);p[i+2]=Math.min(255,m+(p[i+2]-m)*1.15)}break;case'00':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]+(255-p[i])*.1);p[i+1]=Math.min(255,p[i+1]+(255-p[i+1])*.1);p[i+2]=Math.min(255,p[i+2]+(255-p[i+2])*.1)}break;case'10':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]+6);p[i+1]=Math.min(255,p[i+1]+6);p[i+2]=Math.min(255,p[i+2]+6)}break}}
+function babyF(p,s){const cx=s/2,cy=s/2,r2=s*.35;for(let y=Math.floor(cy-r2);y<cy+r2;y++){for(let x=Math.floor(cx-r2);x<cx+r2;x++){const dx=x-cx,dy=y-cy,dist=Math.sqrt(dx*dx+dy*dy);if(dist<r2){const i=(y*s+x)*4,t=1-dist/r2;
+p[i]=Math.min(255,p[i]+32*t);p[i+1]=Math.min(255,p[i+1]+24*t);p[i+2]=Math.min(255,p[i+2]+14*t);
+if(Math.abs(x-cx)<s*.22&&Math.abs(y-cy-s*.08)<s*.12){p[i]=Math.min(255,p[i]+25*t);p[i+1]=Math.max(0,p[i+1]-8*t);p[i+2]=Math.max(0,p[i+2]-4*t)}}}}}
+function eraColor(p,era){switch(era){
+case'70':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]*.65+25);p[i+1]=Math.min(255,p[i+1]*.60+18);p[i+2]=Math.min(255,p[i+2]*.42+8)}break;
+case'80':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]+20);p[i+1]=Math.min(255,p[i+1]+8);p[i+2]=Math.min(255,Math.max(0,p[i+2]-5))}break;
+case'90':for(let i=0;i<p.length;i+=4){const m=(p[i]+p[i+1]+p[i+2])/3;p[i]=Math.min(255,m+(p[i]-m)*1.25+5);p[i+1]=Math.min(255,m+(p[i+1]-m)*1.25+3);p[i+2]=Math.min(255,m+(p[i+2]-m)*1.20)}break;
+case'00':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]+(255-p[i])*.15);p[i+1]=Math.min(255,p[i+1]+(255-p[i+1])*.12);p[i+2]=Math.min(255,p[i+2]+(255-p[i+2])*.08)}break;
+case'10':for(let i=0;i<p.length;i+=4){p[i]=Math.min(255,p[i]+12);p[i+1]=Math.min(255,p[i+1]+10);p[i+2]=Math.min(255,p[i+2]+8)}break}}
 function vhsF(p,s){for(let y=0;y<s;y++){if(Math.random()<.025){const shift=Math.floor((Math.random()-.5)*6);for(let x=0;x<s;x++){const i1=(y*s+Math.max(0,Math.min(s-1,x+shift)))*4,i2=(y*s+x)*4;p[i2]=p[i1];p[i2+1]=p[i1+1];p[i2+2]=p[i1+2]}}}}
 function glitchF(p,s){for(let j=0;j<8;j++){const y1=Math.floor(Math.random()*s),h=Math.floor(Math.random()*10+3),shift=Math.floor((Math.random()-.5)*14);for(let y=y1;y<Math.min(s,y1+h);y++){const row=new Uint8ClampedArray(s*4);for(let x=0;x<s;x++){const i1=(y*s+x)*4;row[x*4]=p[i1];row[x*4+1]=p[i1+1];row[x*4+2]=p[i1+2]}for(let x=0;x<s;x++){const si=(x+shift+s)%s,idx=(y*s+x)*4;p[idx]=row[si*4]||row[0];p[idx+1]=row[si*4+1]||row[1];p[idx+2]=row[si*4+2]||row[2]}}}}
 function updateMapAvatar(){const c=document.getElementById('rc'),a=document.getElementById('ma');if(!c||!a)return;a.src=c.toDataURL('image/jpeg',.7);a.classList.add('on')}

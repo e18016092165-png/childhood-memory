@@ -381,7 +381,7 @@ const LS=window.localStorage;
 // ==================== AI WORKER CONFIG ====================
 // 部署 Cloudflare Worker 后，把 URL 填到这里
 // 不填则走纯前端回退（Canvas 像素处理）
-const WORKER_URL = 'https://childhood-memory.e18016092165.workers.dev';
+const WORKER_URL = ''; // Worker 暂时不可用，跳过避免 8s 等待
 // 是否尝试 AI Worker 处理（首次加载模型约 60s）
 const TRY_WORKER = !!WORKER_URL;
 
@@ -530,42 +530,28 @@ function startMusic(){
   initAudio();
   if(!actx) return;
 
-  if(!musicGainNode) {
-    musicGainNode = actx.createGain();
-    musicGainNode.gain.setValueAtTime(0.025, actx.currentTime);
-    musicGainNode.connect(actx.destination);
-  }
-
-  let now = actx.currentTime;
-  let t = 0;
-
-  // 主旋律 + 和声
-  MELODY.forEach((f, i) => {
-    if(f > 0) {
-      // 主旋律 - 钟琴音色
-      playNote(f, MELODY_DUR[i]*0.7, t, 'sine', .04);
-      // 和声（高八度，更轻柔）
-      if(i % 2 === 0) {
-        playNote(MELODY_HARM[Math.floor(i/2)] || f*2, MELODY_DUR[i]*0.5, t+0.03, 'sine', .02);
-      }
-    }
-    t += MELODY_DUR[i];
-  });
-
-  const loopTime = t * 1000;
-  musicTimer = setInterval(() => {
-    let t2 = 0;
-    now = actx.currentTime;
+  // 先确认 AudioContext 真正唤醒，再调度音符
+  (async () => {
+    if(actx.state === 'suspended') await actx.resume().catch(()=>{});
+    let t = 0;
     MELODY.forEach((f, i) => {
       if(f > 0) {
-        playNote(f, MELODY_DUR[i]*0.7, t2, 'sine', .04);
-        if(i % 2 === 0) {
-          playNote(MELODY_HARM[Math.floor(i/2)] || f*2, MELODY_DUR[i]*0.5, t2+0.03, 'sine', .02);
-        }
+        playNote(f, MELODY_DUR[i]*0.7, t, 'sine', .06);
+        if(i % 2 === 0) playNote(MELODY_HARM[Math.floor(i/2)]||f*2, MELODY_DUR[i]*0.5, t+.03, 'sine', .03);
       }
-      t2 += MELODY_DUR[i];
+      t += MELODY_DUR[i];
     });
-  }, loopTime + 3000);
+    musicTimer = setInterval(() => {
+      let t2 = 0;
+      MELODY.forEach((f, i) => {
+        if(f > 0) {
+          playNote(f, MELODY_DUR[i]*0.7, t2, 'sine', .06);
+          if(i % 2 === 0) playNote(MELODY_HARM[Math.floor(i/2)]||f*2, MELODY_DUR[i]*0.5, t2+.03, 'sine', .03);
+        }
+        t2 += MELODY_DUR[i];
+      });
+    }, t*1000 + 3000);
+  })();
 
   btn.style.animation = 'musicPulse 2s ease-in-out infinite';
 }
@@ -883,26 +869,43 @@ for(let y=y0;y<y1;y++){for(let x=x0;x<x1;x++){let sr=0,sg=0,sb=0,count=0;for(let
 }
 
 function yearPost(ctx,s){
-// 暗角（更明显）
-const vg=ctx.createRadialGradient(s/2,s/2,s*.25,s/2,s/2,s/2);
+// 暗角
+const vg=ctx.createRadialGradient(s/2,s/2,s*.2,s/2,s/2,s*.55);
 vg.addColorStop(0,'rgba(0,0,0,0)');
-vg.addColorStop(1,'rgba(0,0,0,.2)');
+vg.addColorStop(.7,'rgba(0,0,0,.08)');
+vg.addColorStop(1,'rgba(0,0,0,.35)');
 ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=vg;ctx.fill();
 
-// 柔光光晕（提亮中心）
-const g=ctx.createRadialGradient(s/2,s/2-s*.05,5,s/2,s/2-s*.05,s*.35);
-g.addColorStop(0,'rgba(255,255,230,.15)');
-g.addColorStop(1,'rgba(255,255,230,0)');
+// 柔光提亮中心
+const g=ctx.createRadialGradient(s/2,s/2-s*.08,5,s/2,s/2-s*.08,s*.4);
+g.addColorStop(0,'rgba(255,255,230,.2)');
+g.addColorStop(.5,'rgba(255,240,210,.1)');
+g.addColorStop(1,'rgba(255,240,210,0)');
 ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
 
-// 年代色边框（粗一圈）
-ctx.beginPath();ctx.arc(s/2,s/2,s/2-6,0,Math.PI*2);
-const cols={'1970':'rgba(160,150,140,.7)','1980':'rgba(212,136,92,.6)','1990':'rgba(196,56,58,.6)','2000':'rgba(74,144,217,.6)','2010':'rgba(123,104,238,.6)'};
-ctx.strokeStyle=cols[S.year];ctx.lineWidth=4;ctx.stroke();
-
-// 双线装饰边框
+// 年代颜色粗边框
+const cols={'1970':'#A0968C','1980':'#D4885C','1990':'#C4383A','2000':'#4A90D9','2010':'#7B68EE'};
+ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);
+ctx.strokeStyle=cols[S.year];ctx.lineWidth=5;ctx.stroke();
 ctx.beginPath();ctx.arc(s/2,s/2,s/2-12,0,Math.PI*2);
-ctx.strokeStyle='rgba(255,255,255,.15)';ctx.lineWidth=1;ctx.stroke();
+ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;ctx.stroke();
+
+// 年代水印戳 - 绝不可能错过
+const yd=YD[S.year];
+ctx.save();
+ctx.translate(s*.75,s*.88);
+ctx.rotate(-.15);
+ctx.fillStyle='rgba(255,255,255,.85)';
+ctx.font='bold 26px -apple-system,"PingFang SC",sans-serif';
+ctx.textAlign='center';
+ctx.shadowColor='rgba(0,0,0,.3)';ctx.shadowBlur=4;
+ctx.fillText(yd.emoji+' '+yd.label,0,0);
+ctx.restore();
+
+// 底部标签
+ctx.font='bold 13px -apple-system,"PingFang SC",sans-serif';
+ctx.fillStyle=cols[S.year];ctx.textAlign='right';
+ctx.fillText(yd.label+' · 童年记忆',s-20,s-16);
 }
 
 function rclip(ctx,s){ctx.beginPath();ctx.arc(s/2,s/2,s/2-4,0,Math.PI*2);ctx.clip()}
